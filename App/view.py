@@ -87,6 +87,9 @@ def print_req_1(control):
         Función que imprime la solución del Requerimiento 1 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 1
+    origen = input("Ingrese el punto de origen: ")
+    destino= input("Ingrese el punto de destino: ")
+    controller.req_1(control,origen,destino)
     
 
 
