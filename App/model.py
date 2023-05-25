@@ -65,7 +65,7 @@ def new_data_structs():
     manera vacía para posteriormente almacenar la información.
     """
     #TODO: Inicializar las estructuras de datos
-    return gr.newGraph(datastructure="ADJ_MTX",directed=True)
+    return gr.newGraph(datastructure="ADJ_MTX",directed=False)
 
 
 # Funciones para agregar informacion al modelo
@@ -146,9 +146,24 @@ def req_1(data_structs,origen,destino):
     """
     # TODO: Realizar el requerimiento 1
     #print(data_structs)
-    cosa=bfs.pathTo(data_structs,destino)
-    print(cosa)
-
+    contador=0
+    grafo=dfs.DepthFirstSearch(data_structs,origen)
+    pila=dfs.pathTo(grafo,destino)
+    nodo=origen
+    total_seg=0
+    total_enc=0
+    #for e in lt.iterator(pila):
+    #    print(e)
+    while pila is not None and not lt.isEmpty(pila):
+        nodo2=st.pop(pila)
+        edge=gr.getEdge(data_structs,nodo,nodo2)["weight"]
+        contador+=edge
+        nodo=nodo2
+        if edge !=0:
+            total_seg+=1
+        else:
+            total_enc+=1
+    print(total_seg,"   ",total_enc)
 def req_2(data_structs):
     """
     Función que soluciona el requerimiento 2

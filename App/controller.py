@@ -124,10 +124,10 @@ def load_data(control):
                      gr.addEdge(control,hiper_np,q['vertex'],0)
                      counter_hiper_nodes_edges+=2
    #return gr.numVertices(control),gr.numEdges(control)
-   #return None
+   return control
    #return gr.numVertices(control),counter_hiper_nodes_edges, counter_hiper_nodes,counter_follow_nodes
 
-   return control,hash_table_per_wolf,gr.numVertices(control),counter_hiper_nodes,counter_wolfs,control['edges'],counter_hiper_nodes_edges,counter_follow_nodes,five_first_last['elements'][:5]+five_first_last['elements'][-5:]
+   #return control,hash_table_per_wolf,gr.numVertices(control),counter_hiper_nodes,counter_wolfs,control['edges'],counter_hiper_nodes_edges,counter_follow_nodes,five_first_last['elements'][:5]+five_first_last['elements'][-5:]
 
 
 # Funciones de ordenamiento
