@@ -59,6 +59,11 @@ def load_data(control):
    Carga los datos del reto
    """
    # TODO: Realizar la carga de datos
+   raw_data_2=csv.DictReader(open("Data/wolfs/BA-Grey-Wolf-individuals-utf8-large.csv", encoding = "utf-8"), delimiter= ",")
+   list_individual_wolfs=lt.newList(datastructure='ARRAY_LIST')
+   for line in raw_data_2:
+      lt.addLast(list_individual_wolfs,line)
+
    raw_data = csv.DictReader(open("Data/wolfs/BA-Grey-Wolf-tracks-utf8-small.csv", encoding = "utf-8"), delimiter= ",")
    hash_table_per_wolf=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING') 
    hiper_nodes=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
@@ -124,7 +129,7 @@ def load_data(control):
                      gr.addEdge(control,hiper_np,q['vertex'],0)
                      counter_hiper_nodes_edges+=2
    #return gr.numVertices(control),gr.numEdges(control)
-   return control
+   return control , list_individual_wolfs
    #return gr.numVertices(control),counter_hiper_nodes_edges, counter_hiper_nodes,counter_follow_nodes
 
    #return control,hash_table_per_wolf,gr.numVertices(control),counter_hiper_nodes,counter_wolfs,control['edges'],counter_hiper_nodes_edges,counter_follow_nodes,five_first_last['elements'][:5]+five_first_last['elements'][-5:]
