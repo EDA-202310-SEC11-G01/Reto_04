@@ -152,9 +152,9 @@ def req_4(data_structs):
     Función que soluciona el requerimiento 4
     """
     # TODO: Realizar el requerimiento 4
-    print(type(data_structs))
-    # for i in lt.iterator(data_structs[1]):
-    #     print(i['study-site'])
+    
+    for i in lt.iterator(data_structs['list_individuals']):
+        print(i['study-site'])
 
 
 def req_5(data_structs):
