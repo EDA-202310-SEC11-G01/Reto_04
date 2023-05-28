@@ -127,7 +127,7 @@ def req_1(data_structs):
     """
     # TODO: Realizar el requerimiento 1
     hola= bfs.BreadhtFisrtSearch(data_structs,"m111p862_57p449")
-    
+  
     return bfs.hasPathTo(hola,"m111p908_57p427")
     #return djk.pathTo(data_structs,'m111p439_56p912_13792_13792')
 
@@ -152,34 +152,33 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
     Función que soluciona el requerimiento 4
     """
     # TODO: Realizar el requerimiento 4
-    
-    # for i in lt.iterator(data_structs['list_individuals']):
-    #     if 'Athabasca' in i['study-site']:
-    #         print(i['study-site'])
-    #         print(i['animal-id'])
-    
-    # for i in lt.iterator(data_structs['hash_table_ocurrence']['table']):
-    #     if i['value']!=None:
-            
-    #         for j in lt.iterator(i['value']):
-    #             if j['lon_lat']==(-111.911, 57.431):
-    #                 print(j['individual-id'], j['lon_lat'])
-    
-    # init_vertex=str(str(str(lon_lat_1[0])+'_'+str(lon_lat_1[1])).replace('.','p').replace('-','m'))
 
-    # return bf.BellmanFord(data_structs['graph'],'m111p268_56p69_32260_32260')
     lon_lat_1_list=lt.newList(datastructure='ARRAY_LIST')
     lon_lat_2_list=lt.newList(datastructure='ARRAY_LIST')
 
     for i in lt.iterator(data_structs['list_hiper_nodes']):
-        lt.addLast(lon_lat_1_list,[i,haversine_equation(i[0],i[1],lon_lat_1[0],lon_lat_1[1])])
-        lt.addLast(lon_lat_2_list,[i,haversine_equation(i[0],i[1],lon_lat_2[0],lon_lat_2[1])])
+        lt.addLast(lon_lat_1_list,(i,haversine_equation(i[0],i[1],lon_lat_1[0],lon_lat_1[1])))
+        lt.addLast(lon_lat_2_list,(i,haversine_equation(i[0],i[1],lon_lat_2[0],lon_lat_2[1])))
     
-    return quk.sort()
-    for j in lt.iterator(lon_lat_1_list):
-        print(type(j[1]))
-            
+    lon_lat_1_nearest=lt.firstElement(quk.sort(lon_lat_1_list,cmp_harvesine))
+    lon_lat_2_nearest=lt.firstElement(quk.sort(lon_lat_2_list,cmp_harvesine))
 
+    lon_lat_1_nearest_converted=str(str(lon_lat_1_nearest[0][0])+'_'+str(lon_lat_1_nearest[0][1])).replace('.','p').replace('-','m')
+    lon_lat_2_nearest_converted=str(str(lon_lat_2_nearest[0][0])+'_'+str(lon_lat_2_nearest[0][1])).replace('.','p').replace('-','m')
+    
+    #graph_bfs=bfs.BreadhtFisrtSearch(data_structs['graph'],lon_lat_1_nearest_converted)
+    graph_bfs=dfs.DepthFirstSearch(data_structs['graph'],lon_lat_1_nearest_converted)
+
+    
+    list_vertices_path=lt.newList(datastructure='ARRAY_LIST')
+    for j in lt.iterator(dfs.pathTo(graph_bfs,lon_lat_2_nearest_converted)):
+        lt.addLast(list_vertices_path,j)
+    
+    print(dfs.pathTo(graph_bfs,'m111p749_57p542_32256_32256'))
+    #gr.getEdge(data_structs['graph'],'m111p863_57p449_32256_32256','m111p749_57p542_32256_32256')
+    # for i in range(list_vertices_path['size']-1):
+    #     print(gr.getEdge(data_structs['graph'],list_vertices_path['elements'][i],list_vertices_path['elements'][i+1]))
+        
             
 
 
@@ -250,7 +249,7 @@ def sort(data_structs):
     pass
 
 def cmp_harvesine(data_1,data_2):
-    return float(data_1[0])<=float(data_2[0])
+    return data_1[1]<=data_2[1]
 
 def cmp_time(data_1,data_2):
     return data_1['time_datetime']<=data_2['time_datetime']
