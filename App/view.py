@@ -73,6 +73,7 @@ def load_data(control):
     usualemnte lo hacemos al final del reto siempre , porque es la parte menos importante, entonces eimpre lo dejamos hasta el final, todo lo del view.
     '''
     return controller.load_data(control)
+    
    
 
 
@@ -111,7 +112,7 @@ def print_req_4(control):
         Función que imprime la solución del Requerimiento 4 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 4
-    print(controller.req_4(control))
+    print(controller.req_4(control,(-111.911, 57.431)))
 
 
 def print_req_5(control):

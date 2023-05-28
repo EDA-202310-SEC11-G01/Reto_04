@@ -111,10 +111,12 @@ def load_data(control):
          else:
             model.add_data_special(hiper_nodes_list,a[0])
 
+   hiper_nodes_df_lt=lt.newList(datastructure='ARRAY_LIST')
    counter_hiper_nodes=0
    counter_hiper_nodes_edges=0
    for key in lt.iterator(hiper_nodes_list['table']):
       if key['key']!=None and key['value']['size']>1:
+         lt.addLast(hiper_nodes_df_lt,key['key'])
          counter_hiper_nodes+=1
          hiper_np=str(str(key['key'][0])+'_'+str(key['key'][1])).replace('.','p').replace('-','m')
          lt.addLast(five_first_last,hiper_np)
@@ -130,6 +132,7 @@ def load_data(control):
                      counter_hiper_nodes_edges+=2
    control['list_individuals']=list_individual_wolfs
    control['hash_table_ocurrence']=hash_table_per_wolf
+   control['list_hiper_nodes']=hiper_nodes_df_lt
   
    return control, counter_hiper_nodes,counter_hiper_nodes_edges
    
@@ -180,12 +183,12 @@ def req_3(control):
 
 
 
-def req_4(control):
+def req_4(control,lon_lat_1):
    """
    Retorna el resultado del requerimiento 4
    """
    # TODO: Modificar el requerimiento 4
-   return model.req_4(control)
+   return model.req_4(control,lon_lat_1)
 
 
 

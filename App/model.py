@@ -147,14 +147,35 @@ def req_3(data_structs):
     pass
 
 
-def req_4(data_structs):
+def req_4(data_structs,lon_lat_1,lon_lat_2):
     """
     Función que soluciona el requerimiento 4
     """
     # TODO: Realizar el requerimiento 4
     
-    for i in lt.iterator(data_structs['list_individuals']):
-        print(i['study-site'])
+    # for i in lt.iterator(data_structs['list_individuals']):
+    #     if 'Athabasca' in i['study-site']:
+    #         print(i['study-site'])
+    #         print(i['animal-id'])
+    
+    # for i in lt.iterator(data_structs['hash_table_ocurrence']['table']):
+    #     if i['value']!=None:
+            
+    #         for j in lt.iterator(i['value']):
+    #             if j['lon_lat']==(-111.911, 57.431):
+    #                 print(j['individual-id'], j['lon_lat'])
+    
+    # init_vertex=str(str(str(lon_lat_1[0])+'_'+str(lon_lat_1[1])).replace('.','p').replace('-','m'))
+
+    # return bf.BellmanFord(data_structs['graph'],'m111p268_56p69_32260_32260')
+
+    for i in lt.iterator(data_structs['list_hiper_nodes']):
+        (i,haversine_equation(i[0],i[1],lon_lat_1[0],lon_lat_1[1]))
+        (i,haversine_equation(i[0],i[1],lon_lat_2[0],lon_lat_2[1]))
+            
+
+            
+
 
 
 def req_5(data_structs):
