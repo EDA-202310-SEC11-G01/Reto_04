@@ -72,7 +72,7 @@ def load_data(control):
     Todo esta ya hecho falta el print del view osea las palabras y eso pero la info esta alli, osea todo esta hecho solo falta mostrarlo. Esto del view 
     usualemnte lo hacemos al final del reto siempre , porque es la parte menos importante, entonces eimpre lo dejamos hasta el final, todo lo del view.
     '''
-    print(controller.load_data(control))
+    return controller.load_data(control)
    
 
 
@@ -111,7 +111,7 @@ def print_req_4(control):
         Función que imprime la solución del Requerimiento 4 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 4
-    pass
+    print(controller.req_4(control))
 
 
 def print_req_5(control):

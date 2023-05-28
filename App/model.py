@@ -65,7 +65,7 @@ def new_data_structs():
     manera vacía para posteriormente almacenar la información.
     """
     #TODO: Inicializar las estructuras de datos
-    return gr.newGraph(datastructure="ADJ_LIST",directed=True)
+    return {'graph':gr.newGraph(datastructure="ADJ_LIST",directed=True),'list_individuals':None,'hash_table_ocurrence':None}
 
 
 # Funciones para agregar informacion al modelo
@@ -152,7 +152,9 @@ def req_4(data_structs):
     Función que soluciona el requerimiento 4
     """
     # TODO: Realizar el requerimiento 4
-    
+    print(type(data_structs))
+    # for i in lt.iterator(data_structs[1]):
+    #     print(i['study-site'])
 
 
 def req_5(data_structs):

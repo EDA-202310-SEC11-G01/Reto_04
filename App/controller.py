@@ -86,9 +86,9 @@ def load_data(control):
       if wolf['key']!=None:
          wolf['value']=quk.sort(wolf['value'],model.cmp_time)
          for j in lt.iterator(wolf['value']):
-               if not gr.containsVertex(control,j['vertex']):
+               if not gr.containsVertex(control['graph'],j['vertex']):
                   counter_follow_nodes+=1
-                  gr.insertVertex(control,j['vertex'])
+                  gr.insertVertex(control['graph'],j['vertex'])
                   model.add_data(array_vertex,j)
    counter_nodes_edges =0                
    for w in lt.iterator(hash_table_per_wolf['table']):
@@ -100,7 +100,7 @@ def load_data(control):
                s_list_1=a.split('_')
                s_list_2=b.split('_')
                counter_nodes_edges+=1
-               gr.addEdge(control,a,b,model.haversine_equation(float(s_list_1[0].replace('m','-').replace('p','.')),float(s_list_1[1].replace('m','-').replace('p','.')),float(s_list_2[0].replace('m','-').replace('p','.')),float(s_list_2[1].replace('m','-').replace('p','.'))))
+               gr.addEdge(control['graph'],a,b,model.haversine_equation(float(s_list_1[0].replace('m','-').replace('p','.')),float(s_list_1[1].replace('m','-').replace('p','.')),float(s_list_2[0].replace('m','-').replace('p','.')),float(s_list_2[1].replace('m','-').replace('p','.'))))
                
    for i in lt.iterator(hiper_nodes['table']):
       if i['key']!=None:
@@ -118,22 +118,21 @@ def load_data(control):
          counter_hiper_nodes+=1
          hiper_np=str(str(key['key'][0])+'_'+str(key['key'][1])).replace('.','p').replace('-','m')
          lt.addLast(five_first_last,hiper_np)
-         gr.insertVertex(control,hiper_np)
+         gr.insertVertex(control['graph'],hiper_np)
          
          for k in lt.iterator(array_vertex['table']):
             if k['key']!=None:
                for q in lt.iterator(k['value']):         
                   d_split=q['vertex'].split('_')
                   if d_split[0]+'_'+d_split[1]==hiper_np:
-                     gr.addEdge(control,q['vertex'],hiper_np,0)
-                     gr.addEdge(control,hiper_np,q['vertex'],0)
+                     gr.addEdge(control['graph'],q['vertex'],hiper_np,0)
+                     gr.addEdge(control['graph'],hiper_np,q['vertex'],0)
                      counter_hiper_nodes_edges+=2
-   #return gr.numVertices(control),gr.numEdges(control)
-   return control , list_individual_wolfs, hash_table_per_wolf
-   #return gr.numVertices(control),counter_hiper_nodes_edges, counter_hiper_nodes,counter_follow_nodes
-
-   #return control,hash_table_per_wolf,gr.numVertices(control),counter_hiper_nodes,counter_wolfs,control['edges'],counter_hiper_nodes_edges,counter_follow_nodes,five_first_last['elements'][:5]+five_first_last['elements'][-5:]
-
+   control['list_individuals']=list_individual_wolfs
+   control['hash_table_ocurrence']=hash_table_per_wolf
+  
+   return control, counter_hiper_nodes,counter_hiper_nodes_edges
+   
 
 # Funciones de ordenamiento
 
@@ -156,7 +155,7 @@ def req_1(control):
    Retorna el resultado del requerimiento 1
    """
    # TODO: Modificar el requerimiento 1
-   return model.req_1(control)
+   return model.req_1(load_data(control))
 
 
 
@@ -186,7 +185,7 @@ def req_4(control):
    Retorna el resultado del requerimiento 4
    """
    # TODO: Modificar el requerimiento 4
-   pass
+   return control
 
 
 
