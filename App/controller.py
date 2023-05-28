@@ -183,12 +183,12 @@ def req_3(control):
 
 
 
-def req_4(control,lon_lat_1):
+def req_4(control,lon_lat_1,lon_lat_2):
    """
    Retorna el resultado del requerimiento 4
    """
    # TODO: Modificar el requerimiento 4
-   return model.req_4(control,lon_lat_1)
+   return model.req_4(control,lon_lat_1,lon_lat_2)
 
 
 

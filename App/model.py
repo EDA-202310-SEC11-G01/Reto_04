@@ -168,10 +168,16 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
     # init_vertex=str(str(str(lon_lat_1[0])+'_'+str(lon_lat_1[1])).replace('.','p').replace('-','m'))
 
     # return bf.BellmanFord(data_structs['graph'],'m111p268_56p69_32260_32260')
+    lon_lat_1_list=lt.newList(datastructure='ARRAY_LIST')
+    lon_lat_2_list=lt.newList(datastructure='ARRAY_LIST')
 
     for i in lt.iterator(data_structs['list_hiper_nodes']):
-        (i,haversine_equation(i[0],i[1],lon_lat_1[0],lon_lat_1[1]))
-        (i,haversine_equation(i[0],i[1],lon_lat_2[0],lon_lat_2[1]))
+        lt.addLast(lon_lat_1_list,[i,haversine_equation(i[0],i[1],lon_lat_1[0],lon_lat_1[1])])
+        lt.addLast(lon_lat_2_list,[i,haversine_equation(i[0],i[1],lon_lat_2[0],lon_lat_2[1])])
+    
+    return quk.sort()
+    for j in lt.iterator(lon_lat_1_list):
+        print(type(j[1]))
             
 
             
@@ -242,6 +248,9 @@ def sort(data_structs):
     """
     #TODO: Crear función de ordenamiento
     pass
+
+def cmp_harvesine(data_1,data_2):
+    return float(data_1[0])<=float(data_2[0])
 
 def cmp_time(data_1,data_2):
     return data_1['time_datetime']<=data_2['time_datetime']

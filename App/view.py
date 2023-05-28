@@ -112,7 +112,7 @@ def print_req_4(control):
         Función que imprime la solución del Requerimiento 4 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 4
-    print(controller.req_4(control,(-111.911, 57.431)))
+    print(controller.req_4(control,(-111.911, 57.431),(-111.865, 57.435)))
 
 
 def print_req_5(control):
