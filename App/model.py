@@ -154,8 +154,9 @@ def req_1(data_structs,origen,destino):
     total_seg=0
     total_enc=0
     salida=st.newStack()
-    #st.push(salida,destino)
-    size=st.size(pila)
+    size=st.size(pila) 
+    #for e in lt.iterator(data_structs):
+    #   print(e)
     while pila is not None and not lt.isEmpty(pila):
         nodo2=st.pop(pila)
         edge=gr.getEdge(data_structs,nodo,nodo2)["weight"]
@@ -170,10 +171,14 @@ def req_1(data_structs,origen,destino):
             st.push(salida,nodo2)
         
         contador+=1
-    #st.push(salida,origen)
-    for e in lt.iterator(salida):
-        print(e)
-    print(total_seg,"   ",total_enc,"   ",)
+
+    for i in lt.iterator(salida):
+        if gr.containsVertex(data_structs,i):
+            ide=i
+            lon=i[:8].replace("m","-").replace("p",".")
+            lat=i[9:14].replace("m","-").replace("p",".")
+            num_ind=gr.degree(data_structs,i)
+    print(total_seg,"   ",total_enc,"   ",data_structs)
 
 
 
