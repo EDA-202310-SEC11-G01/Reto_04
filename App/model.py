@@ -155,8 +155,7 @@ def req_1(data_structs,origen,destino):
     total_enc=0
     salida=st.newStack()
     size=st.size(pila) 
-    #for e in lt.iterator(data_structs):
-    #   print(e)
+
     while pila is not None and not lt.isEmpty(pila):
         nodo2=st.pop(pila)
         edge=gr.getEdge(data_structs,nodo,nodo2)["weight"]
