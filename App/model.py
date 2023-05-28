@@ -162,20 +162,30 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
     
     lon_lat_1_nearest=lt.firstElement(quk.sort(lon_lat_1_list,cmp_harvesine))
     lon_lat_2_nearest=lt.firstElement(quk.sort(lon_lat_2_list,cmp_harvesine))
-
+    
     lon_lat_1_nearest_converted=str(str(lon_lat_1_nearest[0][0])+'_'+str(lon_lat_1_nearest[0][1])).replace('.','p').replace('-','m')
     lon_lat_2_nearest_converted=str(str(lon_lat_2_nearest[0][0])+'_'+str(lon_lat_2_nearest[0][1])).replace('.','p').replace('-','m')
     
-    #graph_bfs=bfs.BreadhtFisrtSearch(data_structs['graph'],lon_lat_1_nearest_converted)
+   
     graph_bfs=dfs.DepthFirstSearch(data_structs['graph'],lon_lat_1_nearest_converted)
 
     
-    list_vertices_path=lt.newList(datastructure='ARRAY_LIST')
-    for j in lt.iterator(dfs.pathTo(graph_bfs,lon_lat_2_nearest_converted)):
-        lt.addLast(list_vertices_path,j)
+
+
+    #print(list_vertices_path)
+    #print(dfs.pathTo(graph_bfs,'m111p749_57p542_32256_32256'))
+
+    search=djk.Dijkstra(data_structs['graph'],lon_lat_1_nearest_converted)
     
-    print(dfs.pathTo(graph_bfs,'m111p749_57p542_32256_32256'))
+    print(djk.distTo(search,'m111p866_57p451'))
+
+    list_vertices_path=lt.newList(datastructure='ARRAY_LIST')
+    for j in lt.iterator(djk.pathTo(search,'m111p866_57p451')):
+        lt.addLast(list_vertices_path,j)
+
+    print(list_vertices_path)
     #gr.getEdge(data_structs['graph'],'m111p863_57p449_32256_32256','m111p749_57p542_32256_32256')
+
     # for i in range(list_vertices_path['size']-1):
     #     print(gr.getEdge(data_structs['graph'],list_vertices_path['elements'][i],list_vertices_path['elements'][i+1]))
         
