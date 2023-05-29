@@ -331,13 +331,12 @@ def req_6(data_structs,init_date,end_date,animal_sex):
     return list_individual_short_char['elements'][0],shortest_path[1],len(hiper_nodes_route_shortest),path_shortest_size,list_3_first_last_shortest,list_individual_large_char['elements'][0],larger_path[1],len(hiper_nodes_route_shortest),path_larger_size,list_3_first_last_larger
     
     
-
 def req_7(data_structs):
     """
     Función que soluciona el requerimiento 7
     """
     # TODO: Realizar el requerimiento 7
-    pass
+    
 
 
 def req_8(data_structs):
