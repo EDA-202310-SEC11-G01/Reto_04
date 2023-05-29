@@ -221,13 +221,6 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
 
     return lon_lat_1_nearest[1], lon_lat_2_nearest[1], total_weight, len(hiper_nodes_route), number_nodes_individuals,total_segments,list_3_first_last
             
-    
-   
-    
-            
-
-
-
 def req_5(data_structs):
     """
     Función que soluciona el requerimiento 5
