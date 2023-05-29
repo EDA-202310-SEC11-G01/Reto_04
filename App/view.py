@@ -136,7 +136,7 @@ def print_req_7(control):
         Función que imprime la solución del Requerimiento 7 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 7
-    pass
+    print(controller.req_7(control,'2012-11-28 00:00','2014-05-17 23:59','-17.3','9.7'))
 
 
 def print_req_8(control):
