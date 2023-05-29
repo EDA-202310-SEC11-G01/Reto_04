@@ -157,9 +157,9 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
     lon_lat_2_list=lt.newList(datastructure='ARRAY_LIST')
 
     for i in lt.iterator(data_structs['list_hiper_nodes']):
-        lt.addLast(lon_lat_1_list,(i,haversine_equation(i[0],i[1],lon_lat_1[0],lon_lat_1[1])))#0:lon_lat 1:distance
-        lt.addLast(lon_lat_2_list,(i,haversine_equation(i[0],i[1],lon_lat_2[0],lon_lat_2[1])))#0:lon_lat 1:distance
-    
+        lt.addLast(lon_lat_1_list,(i,haversine_equation(i[0],i[1],lon_lat_1[0],lon_lat_1[1])))
+        lt.addLast(lon_lat_2_list,(i,haversine_equation(i[0],i[1],lon_lat_2[0],lon_lat_2[1])))
+
     lon_lat_1_nearest=lt.firstElement(quk.sort(lon_lat_1_list,cmp_harvesine))
     lon_lat_2_nearest=lt.firstElement(quk.sort(lon_lat_2_list,cmp_harvesine))
     
