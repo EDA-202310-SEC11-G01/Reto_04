@@ -328,7 +328,6 @@ def req_6(data_structs,init_date,end_date,animal_sex):
     list_individual_short_char['elements'][0]['total_distance']=path_total_shortest
     list_individual_large_char['elements'][0]['total_distance']=path_total_larger
     
-    
     return list_individual_short_char['elements'][0],shortest_path[1],len(hiper_nodes_route_shortest),path_shortest_size,list_3_first_last_shortest,list_individual_large_char['elements'][0],larger_path[1],len(hiper_nodes_route_shortest),path_larger_size,list_3_first_last_larger
     
     
