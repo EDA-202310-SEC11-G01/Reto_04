@@ -201,33 +201,31 @@ def req_2(data_structs,origen,destino):
     contador=1
     grafo=bf.BellmanFord(data_structs["graph"],origen)
     pila=bf.pathTo(grafo,destino)
-    nodo=origen
     total_seg=0
     total_enc=0
     salida=st.newStack()
     size=st.size(pila) 
-    xcosa=st.pop(pila)
-    st.push(salida,xcosa)
     lista_lobos=lt.newList()
-    print(pila)
-    while pila is not None and not lt.isEmpty(pila):
-        nodo2=st.pop(pila)
-        edge=round(gr.getEdge(data_structs["graph"],nodo,nodo2)["weight"],3)
+    reves=st.newStack()
+    for w in lt.iterator(pila):
+        st.push(reves,w)
+    for e in lt.iterator(reves):
+        edge=round(e["weight"])
         dist+=edge
-        ide=nodo
-        lon=nodo[:8].replace("m","-").replace("p",".")
-        lat=nodo[9:15].replace("m","-").replace("p",".")
-        num_ind=gr.degree(data_structs["graph"],nodo)
-        lobos_adj=gr.adjacents(data_structs["graph"],nodo)
-        e=0
+        ide=e["vertexA"]
+        lon=e["vertexA"][:8].replace("m","-").replace("p",".")
+        lat=e["vertexA"][9:15].replace("m","-").replace("p",".")
+        num_ind=gr.degree(data_structs["graph"],e["vertexA"])
+        lobos_adj=gr.adjacents(data_structs["graph"],e["vertexA"])
+        i=0
 
         for j in lt.iterator(lobos_adj):
-            if e<3 or (e<= lt.size(lobos_adj) and e>=lt.size(lobos_adj)-3):
+            if i<3 or (i<= lt.size(lobos_adj) and i>=lt.size(lobos_adj)-3):
                 lt.addLast(lista_lobos,j)
-            e+=1
+            i+=1
 
 
-        dicci={"id":ide,"longitud":lon,"latitud":lat,"numero individuos":num_ind,"lobos":lista_lobos,"distancia al siguiente vértice":edge,"siguiente vértice":nodo2}
+        dicci={"id":ide,"longitud":lon,"latitud":lat,"numero individuos":num_ind,"lobos":lista_lobos,"distancia al siguiente vértice":edge,"siguiente vértice":e["vertexB"]}
         if edge !=0:
             total_seg+=1
         else:
@@ -236,8 +234,9 @@ def req_2(data_structs,origen,destino):
         if contador <5 or (contador <= size and contador>=size-5):
             st.push(salida,dicci)
 
-        nodo=nodo2
         contador+=1
+    for x in lt.iterator(salida):
+        print(x)
     tupla=(dist,total_enc,total_seg,salida)
     #return tupla
 
