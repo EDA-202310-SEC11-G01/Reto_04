@@ -61,8 +61,9 @@ def load_data(control):
    # TODO: Realizar la carga de datos
    raw_data_2=csv.DictReader(open("Data/wolfs/BA-Grey-Wolf-individuals-utf8-large.csv", encoding = "utf-8"), delimiter= ",")
    list_individual_wolfs=lt.newList(datastructure='ARRAY_LIST')
-   for line in raw_data_2:
-      lt.addLast(list_individual_wolfs,line)
+   for l in raw_data_2:
+      l['individual-id']=l['animal-id']+'_'+l['tag-id']
+      lt.addLast(list_individual_wolfs,l)
 
    raw_data = csv.DictReader(open("Data/wolfs/BA-Grey-Wolf-tracks-utf8-small.csv", encoding = "utf-8"), delimiter= ",")
    hash_table_per_wolf=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING') 
@@ -70,6 +71,8 @@ def load_data(control):
    hiper_nodes_list=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
    array_vertex=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
    five_first_last=lt.newList(datastructure='ARRAY_LIST')
+   hash_vertex=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
+
    counter_wolfs=0
    for line in raw_data:
       line['time_datetime']=datetime.strptime(line['timestamp'],'%Y-%m-%d %H:%M')
@@ -87,6 +90,7 @@ def load_data(control):
          wolf['value']=quk.sort(wolf['value'],model.cmp_time)
          for j in lt.iterator(wolf['value']):
                if not gr.containsVertex(control['graph'],j['vertex']):
+                  model.add_data(hash_vertex,j)
                   counter_follow_nodes+=1
                   gr.insertVertex(control['graph'],j['vertex'])
                   model.add_data(array_vertex,j)
@@ -133,6 +137,7 @@ def load_data(control):
    control['list_individuals']=list_individual_wolfs
    control['hash_table_ocurrence']=hash_table_per_wolf
    control['list_hiper_nodes']=hiper_nodes_df_lt
+   control['hash_vertex']=hash_vertex
   
    return control, counter_hiper_nodes,counter_hiper_nodes_edges
    
@@ -201,12 +206,12 @@ def req_5(control):
    pass
 
 
-def req_6(control):
+def req_6(control,init_date,end_date,animal_sex):
    """
    Retorna el resultado del requerimiento 6
    """
    # TODO: Modificar el requerimiento 6
-   pass
+   return model.req_6(control,init_date,end_date,animal_sex)
 
 
 

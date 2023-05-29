@@ -128,7 +128,7 @@ def print_req_6(control):
         Función que imprime la solución del Requerimiento 6 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 6
-    print(controller.req_6(control))
+    print(controller.req_6(control,'2013-02-16 00:00','2014-10-23 23:59','hembras'))
 
 
 def print_req_7(control):

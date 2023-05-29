@@ -26,6 +26,7 @@
 
 
 import config as cf
+from datetime import datetime
 from math import radians, cos, sin, asin, sqrt
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
@@ -229,12 +230,49 @@ def req_5(data_structs):
     pass
 
 
-def req_6(data_structs):
+def req_6(data_structs,init_date,end_date,animal_sex):
     """
     Función que soluciona el requerimiento 6
     """
     # TODO: Realizar el requerimiento 6
-    pass
+    
+    #Primera parte
+    if animal_sex=='hembras':
+        animal_sex='f'
+    if animal_sex=='machos':
+        animal_sex='m'
+
+    list_indi_short=lt.newList(datastructure='ARRAY_LIST')
+    list_vertex_m_f=lt.newList(datastructure='ARRAY_LIST')
+    hash_filter_vertex=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
+    list_shortest_path=lt.newList(datastructure='ARRAY_LIST')
+
+    for g in range(0,data_structs['list_individuals']['size']):
+        if data_structs['list_individuals']['elements'][g]['animal-sex']==animal_sex:
+            lt.addLast(list_indi_short,data_structs['list_individuals']['elements'][g])
+            lt.addLast(list_vertex_m_f,data_structs['list_individuals']['elements'][g]['individual-id'])
+
+
+    for i in lt.iterator(data_structs['hash_vertex']['table']):
+        if i['key']!=None and i['key']in list_vertex_m_f['elements']:
+            
+            for j in lt.iterator(i['value']):
+                if datetime.strptime(init_date,'%Y-%m-%d %H:%M')<=j['time_datetime']<=datetime.strptime(end_date,'%Y-%m-%d %H:%M'):
+                    add_data(hash_filter_vertex,j)
+
+    for y in lt.iterator(hash_filter_vertex['table']):
+        if y['key']!=None:
+            mini_graph=djk.Dijkstra(data_structs['graph'],y['value']['elements'][0]['vertex'])
+            djk.pathTo(mini_graph,y['value']['elements'][-1]['vertex'])
+            lt.addLast(list_shortest_path,(y['value']['elements'][-1]['individual-id'],djk.distTo(mini_graph,y['value']['elements'][-1]['vertex']),))
+    
+    shortest_larger_path=quk.sort(list_shortest_path,cmp_harvesine)#0: KEY 1:DISTANCIA RECORRDIA
+    shortest_path=lt.firstElement(shortest_larger_path)
+    larger_path=shortest_larger_path['elements'][-1]
+
+    mp.get(hash_filter_vertex,shortest_path[0])['value']['']
+
+    mp.get(hash_filter_vertex,larger_path[0])
 
 
 def req_7(data_structs):
