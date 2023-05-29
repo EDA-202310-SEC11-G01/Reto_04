@@ -264,16 +264,60 @@ def req_6(data_structs,init_date,end_date,animal_sex):
         if y['key']!=None:
             mini_graph=djk.Dijkstra(data_structs['graph'],y['value']['elements'][0]['vertex'])
             djk.pathTo(mini_graph,y['value']['elements'][-1]['vertex'])
-            lt.addLast(list_shortest_path,(y['value']['elements'][-1]['individual-id'],djk.distTo(mini_graph,y['value']['elements'][-1]['vertex']),))
+            lt.addLast(list_shortest_path,(y['value']['elements'][-1]['individual-id'],djk.distTo(mini_graph,y['value']['elements'][-1]['vertex'])))
     
     shortest_larger_path=quk.sort(list_shortest_path,cmp_harvesine)#0: KEY 1:DISTANCIA RECORRDIA
     shortest_path=lt.firstElement(shortest_larger_path)
     larger_path=shortest_larger_path['elements'][-1]
 
-    mp.get(hash_filter_vertex,shortest_path[0])['value']['']
+    s_1=mp.get(hash_filter_vertex,shortest_path[0])
+    graph_djk_shortest=djk.Dijkstra(data_structs['graph'],s_1['value']['elements'][0]['vertex'])
+    path_shortest=djk.pathTo(graph_djk_shortest,s_1['value']['elements'][-1]['vertex'])#Camino
 
-    mp.get(hash_filter_vertex,larger_path[0])
+    s_2=mp.get(hash_filter_vertex,larger_path[0])
+    graph_djk_shortest=djk.Dijkstra(data_structs['graph'],s_2['value']['elements'][0]['vertex'])
+    path_larger=djk.pathTo(graph_djk_shortest,s_2['value']['elements'][-1]['vertex'])#Camino
+    
+    list_individual_short_char=lt.newList(datastructure='ARRAY_LIST')
+    list_individual_large_char=lt.newList(datastructure='ARRAY_LIST')
 
+    for w in lt.iterator(list_indi_short):
+        if w['individual-id']==shortest_path[0]:
+            lt.addLast(list_individual_short_char,w)#carecteristicas
+        if w['individual-id']==larger_path[0]:
+            lt.addLast(list_individual_large_char,w)#carecteristicas
+
+    '''
+        o La distancia total posible en el recorrido.
+        o El total de puntos de encuentro/seguimientos pertenecientes al camino identificado(nodos). 
+        o El total de trayectos que conforman la ruta identificada(arcos).
+        o Los tres primeros y tres últimos puntos de encuentro (incluyendo el punto de origen y de destino) que pertenecen al corredor identificado con la siguiente información: ▪ El identificador del punto de encuentro.
+            ▪ La longitud y latitud del punto.
+            ▪ El número de individuos (lobos) que transitan por ese punto.
+            ▪ Listado con los tres primeros y tres últimos identificadores de lobos que transitan por el punto.
+    '''
+    hiper_nodes_route_shortest=lt.newList(datastructure='ARRAY_LIST')
+    hiper_nodes_route_larger=lt.newList(datastructure='ARRAY_LIST')
+
+    for b in lt.iterator(path_shortest):
+        if b['weight']==0 and len(b['vertexA'].split('_'))==2:
+                lt.addLast(hiper_nodes_route_shortest,b['vertexA'])
+    
+        if b['weight']==0 and len(b['vertexB'].split('_'))==2:
+                lt.addLast(hiper_nodes_route_shortest,b['vertexB'])     
+
+    for r in lt.iterator(path_larger):
+        if r['weight']==0 and len(r['vertexA'].split('_'))==2:
+                lt.addLast(hiper_nodes_route_larger,r['vertexA'])
+    
+        if r['weight']==0 and len(r['vertexB'].split('_'))==2:
+                lt.addLast(hiper_nodes_route_larger,r['vertexB'])    
+
+    hiper_nodes_route_shortest=list(set(hiper_nodes_route_shortest['elements']))#Lenght total hiper_nodos
+    hiper_nodes_route_larger=list(set(hiper_nodes_route_larger['elements']))#Lenght total hiper_nodos
+
+    path_larger_size=(path_larger['size']*2)-1
+    path_shortest_size=(path_shortest['size']*2)-1
 
 def req_7(data_structs):
     """
