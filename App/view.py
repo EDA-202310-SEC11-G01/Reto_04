@@ -125,7 +125,10 @@ def print_req_5(control):
         Función que imprime la solución del Requerimiento 5 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 5
-    pass
+    origen= input("ingrese el punto de origen: ")
+    distancia= float(input("ingrese la distancia a recorrer: "))
+    numero= int(input("ingrese el número mínimo de puntos a inspeccionar: "))
+    final=controller.req_5(control,origen,distancia,numero)
 
 
 def print_req_6(control):

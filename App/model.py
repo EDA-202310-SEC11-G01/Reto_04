@@ -256,12 +256,36 @@ def req_4(data_structs):
     pass
 
 
-def req_5(data_structs):
+def req_5(data_structs,origen,distancia,numero):
     """
     Función que soluciona el requerimiento 5
     """
     # TODO: Realizar el requerimiento 5
-    pass
+    distancia=distancia/2
+    estructura=prim.PrimMST(data_structs["graph"],origen)
+    algo=prim.scan(data_structs["graph"],estructura,origen)
+    dist=0
+    puntos=0
+    ind=0
+    mapa=mp.newMap()
+    lista_ind=lt.newList()
+    lista_puntos=lt.newList()
+    #print(estructura)
+    for a in mp.size(algo):
+        i=mp.get(algo,"key")
+        dist+=i["index"]
+        puntos+=1
+        lt.addLast(lista_puntos,i)
+        ind=gr.degree(data_structs["graph"],i["key"])
+        lt.addLast(ind)
+        mp.put(mapa,"número de puntos",puntos)
+        mp.put(mapa,"distancia recorrida",dist)
+        mp.put(mapa,"listado de puntos",lista_puntos)
+        mp.put(mapa,"número de individuos",lista_ind)
+        if (dist<=distancia or dist>distancia-5) and (puntos>numero):
+            return mapa
+        
+            
 
 
 def req_6(data_structs):

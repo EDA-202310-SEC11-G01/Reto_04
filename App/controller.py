@@ -193,12 +193,12 @@ def req_4(control):
 
 
 
-def req_5(control):
+def req_5(control,origen,distancia,numero):
    """
    Retorna el resultado del requerimiento 5
    """
    # TODO: Modificar el requerimiento 5
-   pass
+   return model.req_5(control,origen,distancia,numero)
 
 
 def req_6(control):
