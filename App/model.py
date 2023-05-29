@@ -287,15 +287,6 @@ def req_6(data_structs,init_date,end_date,animal_sex):
         if w['individual-id']==larger_path[0]:
             lt.addLast(list_individual_large_char,w)#carecteristicas
 
-    '''
-        o La distancia total posible en el recorrido.
-        o El total de puntos de encuentro/seguimientos pertenecientes al camino identificado(nodos). 
-        o El total de trayectos que conforman la ruta identificada(arcos).
-        o Los tres primeros y tres últimos puntos de encuentro (incluyendo el punto de origen y de destino) que pertenecen al corredor identificado con la siguiente información: ▪ El identificador del punto de encuentro.
-            ▪ La longitud y latitud del punto.
-            ▪ El número de individuos (lobos) que transitan por ese punto.
-            ▪ Listado con los tres primeros y tres últimos identificadores de lobos que transitan por el punto.
-    '''
     hiper_nodes_route_shortest=lt.newList(datastructure='ARRAY_LIST')
     hiper_nodes_route_larger=lt.newList(datastructure='ARRAY_LIST')
 
@@ -312,12 +303,38 @@ def req_6(data_structs,init_date,end_date,animal_sex):
     
         if r['weight']==0 and len(r['vertexB'].split('_'))==2:
                 lt.addLast(hiper_nodes_route_larger,r['vertexB'])    
-
+    
     hiper_nodes_route_shortest=list(set(hiper_nodes_route_shortest['elements']))#Lenght total hiper_nodos
     hiper_nodes_route_larger=list(set(hiper_nodes_route_larger['elements']))#Lenght total hiper_nodos
 
     path_larger_size=(path_larger['size']*2)-1
     path_shortest_size=(path_shortest['size']*2)-1
+
+    list_3_first_last_shortest=lt.newList(datastructure='ARRAY_LIST')
+    list_3_first_last_larger=lt.newList(datastructure='ARRAY_LIST')
+
+    for p in set(hiper_nodes_route_shortest[:3]+hiper_nodes_route_shortest[-3:]):
+        row=lt.newList(datastructure='ARRAY_LIST')
+        list_adjacents_size=gr.adjacents(data_structs['graph'],p)
+        adjacents_array=lt.newList(datastructure='ARRAY_LIST')
+        coordinates=p.split('_')
+        lon=float(coordinates[0].replace('m','-').replace('p','.'))
+        lati=float(coordinates[1].replace('m','-').replace('p','.'))
+
+        for j in lt.iterator(list_adjacents_size):
+            lt.addLast(adjacents_array,j)
+
+        lt.addLast(row,p)
+        lt.addLast(row,lon)
+        lt.addLast(row,lati)
+        lt.addLast(row,list_adjacents_size['size'])
+        lt.addLast(row,adjacents_array['elements'])
+        lt.addLast(list_3_first_last_shortest,row)
+
+    list_3_first_last_shortest=first_3_last_3(data_structs,hiper_nodes_route_shortest)    
+    list_3_first_last_larger=first_3_last_3(data_structs,hiper_nodes_route_larger)
+
+    return list_3_first_last_larger
 
 def req_7(data_structs):
     """
@@ -346,6 +363,26 @@ def compare(data_1, data_2):
 
 # Funciones de ordenamiento
 
+def first_3_last_3(data_structs,lista):
+    list_=lt.newList(datastructure='ARRAY_LIST')
+    for p in set(lista[:3]+lista[-3:]):
+        row=lt.newList(datastructure='ARRAY_LIST')
+        list_adjacents_size=gr.adjacents(data_structs['graph'],p)
+        adjacents_array=lt.newList(datastructure='ARRAY_LIST')
+        coordinates=p.split('_')
+        lon=float(coordinates[0].replace('m','-').replace('p','.'))
+        lati=float(coordinates[1].replace('m','-').replace('p','.'))
+
+        for j in lt.iterator(list_adjacents_size):
+            lt.addLast(adjacents_array,j)
+
+        lt.addLast(row,p)
+        lt.addLast(row,lon)
+        lt.addLast(row,lati)
+        lt.addLast(row,list_adjacents_size['size'])
+        lt.addLast(row,adjacents_array['elements'])
+        lt.addLast(list_,row['elements'])
+    return list_['elements']
 def cmp_harvesine(data_1,data_2):
     return data_1[1]<=data_2[1]
 
