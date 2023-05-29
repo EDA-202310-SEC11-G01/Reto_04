@@ -218,7 +218,7 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
         list_hiper_node_nearest=quk.sort(list_hiper_node_nearest,cmp_harvesine)['elements'][1]
         lt.addLast(row,str(str(list_hiper_node_nearest[0][0])+'_'+str(list_hiper_node_nearest[0][1])).replace('.','p').replace('-','m'))
         lt.addLast(list_3_first_last,row)
-
+    
     return lon_lat_1_nearest[1], lon_lat_2_nearest[1], total_weight, len(hiper_nodes_route), number_nodes_individuals,total_segments,list_3_first_last
             
 def req_5(data_structs):
