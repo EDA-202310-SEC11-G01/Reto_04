@@ -271,13 +271,15 @@ def req_5(data_structs,origen,distancia,numero):
     lista_ind=lt.newList()
     lista_puntos=lt.newList()
     #print(estructura)
-    for a in mp.size(algo):
-        i=mp.get(algo,"key")
-        dist+=i["index"]
+    for a in lt.iterator(algo["keys"]): 
+        lt.addLast(lista_puntos,a)
         puntos+=1
-        lt.addLast(lista_puntos,i)
-        ind=gr.degree(data_structs["graph"],i["key"])
+        ind=gr.degree(data_structs["graph"],a)
         lt.addLast(ind)
+        for j in lt.iterator(algo["values"]):
+            dist+=j["index"]
+
+
         mp.put(mapa,"número de puntos",puntos)
         mp.put(mapa,"distancia recorrida",dist)
         mp.put(mapa,"listado de puntos",lista_puntos)
