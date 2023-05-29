@@ -99,8 +99,10 @@ def print_req_2(control):
         Función que imprime la solución del Requerimiento 2 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 2
-    pass
-
+    origen = input("Ingrese el punto de origen: ")
+    destino= input("Ingrese el punto de destino: ")
+    final=controller.req_1(control,origen,destino)
+    print(final)
 
 def print_req_3(control):
     """

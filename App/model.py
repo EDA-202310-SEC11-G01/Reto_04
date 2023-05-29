@@ -144,49 +144,102 @@ def req_1(data_structs,origen,destino):
     Función que soluciona el requerimiento 1
     """
     # TODO: Realizar el requerimiento 1
-    #print(data_structs)
     dist=0
     contador=1
-    grafo=dfs.DepthFirstSearch(data_structs,origen)
+    grafo=dfs.DepthFirstSearch(data_structs["graph"],origen)
     pila=dfs.pathTo(grafo,destino)
     nodo=origen
     total_seg=0
     total_enc=0
     salida=st.newStack()
     size=st.size(pila) 
+    xcosa=st.pop(pila)
+    st.push(salida,xcosa)
+    lista_lobos=lt.newList()
 
     while pila is not None and not lt.isEmpty(pila):
         nodo2=st.pop(pila)
-        edge=gr.getEdge(data_structs,nodo,nodo2)["weight"]
+        edge=round(gr.getEdge(data_structs["graph"],nodo,nodo2)["weight"],3)
         dist+=edge
-        nodo=nodo2
+        ide=nodo
+        lon=nodo[:8].replace("m","-").replace("p",".")
+        lat=nodo[9:15].replace("m","-").replace("p",".")
+        num_ind=gr.degree(data_structs["graph"],nodo)
+        lobos_adj=gr.adjacents(data_structs["graph"],nodo)
+        e=0
+
+        for j in lt.iterator(lobos_adj):
+            if e<3 or (e<= lt.size(lobos_adj) and e>=lt.size(lobos_adj)-3):
+                lt.addLast(lista_lobos,j)
+            e+=1
+
+
+        dicci={"id":ide,"longitud":lon,"latitud":lat,"numero individuos":num_ind,"lobos":lista_lobos,"distancia al siguiente vértice":edge,"siguiente vértice":nodo2}
         if edge !=0:
             total_seg+=1
         else:
             total_enc+=1
 
         if contador <5 or (contador <= size and contador>=size-5):
-            st.push(salida,nodo2)
-        
+            st.push(salida,dicci)
+
+        nodo=nodo2
         contador+=1
-
-    for i in lt.iterator(salida):
-        if gr.containsVertex(data_structs,i):
-            ide=i
-            lon=i[:8].replace("m","-").replace("p",".")
-            lat=i[9:14].replace("m","-").replace("p",".")
-            num_ind=gr.degree(data_structs,i)
-    print(total_seg,"   ",total_enc,"   ",data_structs)
+    tupla=(dist,total_enc,total_seg,salida)
+    return tupla
+    
 
 
 
-def req_2(data_structs):
+
+def req_2(data_structs,origen,destino):
     """
     Función que soluciona el requerimiento 2
     """
     # TODO: Realizar el requerimiento 2
-    pass
+    dist=0
+    contador=1
+    grafo=bf.BellmanFord(data_structs["graph"],origen)
+    pila=bf.pathTo(grafo,destino)
+    nodo=origen
+    total_seg=0
+    total_enc=0
+    salida=st.newStack()
+    size=st.size(pila) 
+    xcosa=st.pop(pila)
+    st.push(salida,xcosa)
+    lista_lobos=lt.newList()
+    print(pila)
+    while pila is not None and not lt.isEmpty(pila):
+        nodo2=st.pop(pila)
+        edge=round(gr.getEdge(data_structs["graph"],nodo,nodo2)["weight"],3)
+        dist+=edge
+        ide=nodo
+        lon=nodo[:8].replace("m","-").replace("p",".")
+        lat=nodo[9:15].replace("m","-").replace("p",".")
+        num_ind=gr.degree(data_structs["graph"],nodo)
+        lobos_adj=gr.adjacents(data_structs["graph"],nodo)
+        e=0
 
+        for j in lt.iterator(lobos_adj):
+            if e<3 or (e<= lt.size(lobos_adj) and e>=lt.size(lobos_adj)-3):
+                lt.addLast(lista_lobos,j)
+            e+=1
+
+
+        dicci={"id":ide,"longitud":lon,"latitud":lat,"numero individuos":num_ind,"lobos":lista_lobos,"distancia al siguiente vértice":edge,"siguiente vértice":nodo2}
+        if edge !=0:
+            total_seg+=1
+        else:
+            total_enc+=1
+
+        if contador <5 or (contador <= size and contador>=size-5):
+            st.push(salida,dicci)
+
+        nodo=nodo2
+        contador+=1
+    tupla=(dist,total_enc,total_seg,salida)
+    #return tupla
 
 def req_3(data_structs):
     """
