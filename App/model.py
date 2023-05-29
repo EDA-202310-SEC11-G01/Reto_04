@@ -266,17 +266,26 @@ def req_6(data_structs,init_date,end_date,animal_sex):
             djk.pathTo(mini_graph,y['value']['elements'][-1]['vertex'])
             lt.addLast(list_shortest_path,(y['value']['elements'][-1]['individual-id'],djk.distTo(mini_graph,y['value']['elements'][-1]['vertex'])))
     
-    shortest_larger_path=quk.sort(list_shortest_path,cmp_harvesine)#0: KEY 1:DISTANCIA RECORRDIA
-    shortest_path=lt.firstElement(shortest_larger_path)
+    shortest_larger_path=quk.sort(list_shortest_path,cmp_harvesine)
+    shortest_path=lt.firstElement(shortest_larger_path)#0: KEY 1:DISTANCIA RECORRDIA
     larger_path=shortest_larger_path['elements'][-1]
+
+    total_distance_shortest=mp.get(data_structs['hash_table_ocurrence'],shortest_path[0])
+    total_distance_larger=mp.get(data_structs['hash_table_ocurrence'],larger_path[0])
+
+    graph_djk_total_shortest=djk.Dijkstra(data_structs['graph'],total_distance_shortest['value']['elements'][0]['vertex'])
+    path_total_shortest=djk.distTo(graph_djk_total_shortest,total_distance_shortest['value']['elements'][-1]['vertex'])#Camino
+
+    graph_djk_total_larger=djk.Dijkstra(data_structs['graph'],total_distance_larger['value']['elements'][0]['vertex'])
+    path_total_larger=djk.distTo(graph_djk_total_larger,total_distance_larger['value']['elements'][-1]['vertex'])#Camino
 
     s_1=mp.get(hash_filter_vertex,shortest_path[0])
     graph_djk_shortest=djk.Dijkstra(data_structs['graph'],s_1['value']['elements'][0]['vertex'])
     path_shortest=djk.pathTo(graph_djk_shortest,s_1['value']['elements'][-1]['vertex'])#Camino
 
     s_2=mp.get(hash_filter_vertex,larger_path[0])
-    graph_djk_shortest=djk.Dijkstra(data_structs['graph'],s_2['value']['elements'][0]['vertex'])
-    path_larger=djk.pathTo(graph_djk_shortest,s_2['value']['elements'][-1]['vertex'])#Camino
+    graph_djk_larger=djk.Dijkstra(data_structs['graph'],s_2['value']['elements'][0]['vertex'])
+    path_larger=djk.pathTo(graph_djk_larger,s_2['value']['elements'][-1]['vertex'])#Camino
     
     list_individual_short_char=lt.newList(datastructure='ARRAY_LIST')
     list_individual_large_char=lt.newList(datastructure='ARRAY_LIST')
@@ -313,28 +322,16 @@ def req_6(data_structs,init_date,end_date,animal_sex):
     list_3_first_last_shortest=lt.newList(datastructure='ARRAY_LIST')
     list_3_first_last_larger=lt.newList(datastructure='ARRAY_LIST')
 
-    for p in set(hiper_nodes_route_shortest[:3]+hiper_nodes_route_shortest[-3:]):
-        row=lt.newList(datastructure='ARRAY_LIST')
-        list_adjacents_size=gr.adjacents(data_structs['graph'],p)
-        adjacents_array=lt.newList(datastructure='ARRAY_LIST')
-        coordinates=p.split('_')
-        lon=float(coordinates[0].replace('m','-').replace('p','.'))
-        lati=float(coordinates[1].replace('m','-').replace('p','.'))
-
-        for j in lt.iterator(list_adjacents_size):
-            lt.addLast(adjacents_array,j)
-
-        lt.addLast(row,p)
-        lt.addLast(row,lon)
-        lt.addLast(row,lati)
-        lt.addLast(row,list_adjacents_size['size'])
-        lt.addLast(row,adjacents_array['elements'])
-        lt.addLast(list_3_first_last_shortest,row)
-
     list_3_first_last_shortest=first_3_last_3(data_structs,hiper_nodes_route_shortest)    
     list_3_first_last_larger=first_3_last_3(data_structs,hiper_nodes_route_larger)
-
-    return list_3_first_last_larger
+    
+    list_individual_short_char['elements'][0]['total_distance']=path_total_shortest
+    list_individual_large_char['elements'][0]['total_distance']=path_total_larger
+    
+    
+    return list_individual_short_char['elements'][0],shortest_path[1],len(hiper_nodes_route_shortest),path_shortest_size,list_3_first_last_shortest,list_individual_large_char['elements'][0],larger_path[1],len(hiper_nodes_route_shortest),path_larger_size,list_3_first_last_larger
+    
+    
 
 def req_7(data_structs):
     """
