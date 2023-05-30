@@ -219,7 +219,7 @@ def print_req_7(control):
     fecha_final = input("Ingrese la fecha final del análisis (formato YYYY-MM-DD): ")
     temperatura_minima = float(input("Ingrese la temperatura ambiente mínima (en grados centígrados): "))
     temperatura_maxima = float(input("Ingrese la temperatura ambiente máxima (en grados centígrados): "))
-
+    
     headers_1_1=['individual-id','animal-taxon','animal-life-stage','animal-sex','study-name','total_distance','deployment-comments']
 
     x=controller.req_7(control,fecha_inicial,fecha_final,temperatura_minima,temperatura_maxima)
