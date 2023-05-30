@@ -56,6 +56,14 @@ def tabulate_data(data_set,header):
     rows=[x.values() for x in data_set_org]
     print(tabulate(rows,list(data_set_org[0].keys()),tablefmt='grid',stralign='center',maxheadercolwidths=13,maxcolwidths=13))
 
+def tabulate_data_req7(data_set,header):
+    data_set_org=[]
+    for i in data_set:
+        i=dict([(key,val) for key,val in i.items() if key in header])
+        data_set_org.append(i)
+    rows=[x.values() for x in data_set_org]
+    return tabulate(zip(*[list(data_set_org[0].keys()),list(data_set_org[0].values())]), tablefmt='grid',maxcolwidths=14)
+   
 def print_menu():
     print("Bienvenido")
     print("1- Cargar información")
@@ -207,7 +215,28 @@ def print_req_7(control):
         Función que imprime la solución del Requerimiento 7 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 7
-    print(controller.req_7(control,'2012-11-28 00:00','2014-05-17 23:59','-17.3','9.7'))
+    fecha_inicial = input("Ingrese la fecha inicial del análisis (formato YYYY-MM-DD): ")
+    fecha_final = input("Ingrese la fecha final del análisis (formato YYYY-MM-DD): ")
+    temperatura_minima = float(input("Ingrese la temperatura ambiente mínima (en grados centígrados): "))
+    temperatura_maxima = float(input("Ingrese la temperatura ambiente máxima (en grados centígrados): "))
+
+    headers_1_1=['individual-id','animal-taxon','animal-life-stage','animal-sex','study-name','total_distance','deployment-comments']
+
+    x=controller.req_7(control,'2012-11-28 00:00','2014-05-17 23:59','-17.3','9.7')
+    print('El total de manadas reconocidas por sus movimientos y puntos de encuentro (componentes conectados) en el rango de fechas y temperatura ambiente dados.',x[0])
+    headers = [
+    "Num Puntos Encuentro",
+    "Los tres primeros y tres últimos puntos de encuentro reconocidos dentro del territorio",
+    "Num Individuos por manada",
+    "Los tres primeros y tres últimos miembros de la manada",
+    "Longitud min","Longitud max","Latitudes min","Latitudes max"]
+
+    for i in x[1]:
+        i[3]=tabulate_data_req7(i[3],headers_1_1)
+    
+    print(tabulate(x[1],headers,tablefmt='grid',stralign='center',maxheadercolwidths=13))
+    
+       
 
 
 def print_req_8(control):

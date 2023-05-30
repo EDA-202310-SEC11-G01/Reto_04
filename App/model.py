@@ -467,9 +467,7 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
 
         me_ma_lat=quk.sort(list_lon,cmp_lon_lat)['elements']#menor:0 mayor:-1  LON
         me_ma_lon=quk.sort(list_lat,cmp_lon_lat)['elements']#menor:0 mayor:-1 LAT
-        lt.addLast(rows,[hiper_nodes_sub_list['size'],hiper_nodes_sub_list_3_first_last,herd_members['size'],list_wolf_details,me_ma_lat[0],me_ma_lat[-1],me_ma_lon[0],me_ma_lon[-1]])
-
-        # lt.addLast(rows,row['elements'])
+        lt.addLast(rows,[hiper_nodes_sub_list['size'],hiper_nodes_sub_list_3_first_last,herd_members['size'],list_wolf_details['elements'],me_ma_lat[0],me_ma_lat[-1],me_ma_lon[0],me_ma_lon[-1]])
 
     largest_territorie=lt.newList(datastructure='ARRAY_LIST')
     for cd in lt.iterator(list_territories):
@@ -498,7 +496,7 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
             first_last_3_individuals=set(list_individuals['elements'][:3]+list_individuals['elements'][-3:])
             
             lt.addLast(part_2,[largest_path_territorie[1],list_hiper_nodes['size'],(path_largest['size'])-1,first_last_3_hiper_nodes,set(list_individuals['elements']),first_last_3_individuals])
-            return rows,part_2
+            return scc.connectedComponents(scc_graph),rows['elements'],part_2
     
 
  #Cambiar lo de qua y modificar lo de los indentificadores en el 4
