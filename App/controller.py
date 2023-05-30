@@ -69,7 +69,8 @@ def load_data(control):
    hash_table_per_wolf=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING') 
    hiper_nodes=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
    hiper_nodes_list=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
-   array_vertex=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
+   #array_vertex=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
+   array_vertex=lt.newList(datastructure='ARRAY_LIST')
    five_first_last=lt.newList(datastructure='ARRAY_LIST')
    hash_vertex=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
 
@@ -93,7 +94,8 @@ def load_data(control):
                   model.add_data(hash_vertex,j)
                   counter_follow_nodes+=1
                   gr.insertVertex(control['graph'],j['vertex'])
-                  model.add_data(array_vertex,j)
+                  #model.add_data(array_vertex,j)
+                  lt.addLast(array_vertex,j['vertex'])
    counter_nodes_edges =0                
    for w in lt.iterator(hash_table_per_wolf['table']):
       if w['key']!=None:
@@ -126,14 +128,12 @@ def load_data(control):
          lt.addLast(five_first_last,hiper_np)
          gr.insertVertex(control['graph'],hiper_np)
          
-         for k in lt.iterator(array_vertex['table']):
-            if k['key']!=None:
-               for q in lt.iterator(k['value']):         
-                  d_split=q['vertex'].split('_')
-                  if d_split[0]+'_'+d_split[1]==hiper_np:
-                     gr.addEdge(control['graph'],q['vertex'],hiper_np,0)
-                     gr.addEdge(control['graph'],hiper_np,q['vertex'],0)
-                     counter_hiper_nodes_edges+=2
+         for k in lt.iterator(array_vertex):       
+            d_split=k.split('_')
+            if d_split[0]+'_'+d_split[1]==hiper_np:
+               gr.addEdge(control['graph'],k,hiper_np,0)
+               gr.addEdge(control['graph'],hiper_np,k,0)
+               counter_hiper_nodes_edges+=2
    control['list_individuals']=list_individual_wolfs
    control['hash_table_ocurrence']=hash_table_per_wolf
    control['list_hiper_nodes']=hiper_nodes_df_lt

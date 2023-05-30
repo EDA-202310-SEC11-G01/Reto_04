@@ -72,7 +72,8 @@ def load_data(control):
     Todo esta ya hecho falta el print del view osea las palabras y eso pero la info esta alli, osea todo esta hecho solo falta mostrarlo. Esto del view 
     usualemnte lo hacemos al final del reto siempre , porque es la parte menos importante, entonces eimpre lo dejamos hasta el final, todo lo del view.
     '''
-    return controller.load_data(control)
+    print(controller.load_data(control)[2])
+    #print(control['graph'])
     
    
 

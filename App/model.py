@@ -338,10 +338,14 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
     # TODO: Realizar el requerimiento 7
     #scc.sccCount(data_structs['graph']).keys()
     #print(scc.KosarajuSCC(data_structs['graph']).keys())
+    new_graph=gr.newGraph(datastructure="ADJ_LIST",directed=True)
     init_date=datetime.strptime(init_date,'%Y-%m-%d %H:%M')
     end_date=datetime.strptime(end_date,'%Y-%m-%d %H:%M')
     list_individual_id_selected=lt.newList(datastructure='ARRAY_LIST')
     hash_table_filtered=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
+    hiper_nodes=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
+    hiper_nodes_list=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
+    array_vertex=lt.newList(datastructure='ARRAY_LIST')
 
     for i in lt.iterator(data_structs['list_individuals']):
         if len(i['deploy-on-date'])>1 and datetime.strptime(i['deploy-on-date'],'%Y-%m-%d %H:%M')>=init_date:
@@ -353,7 +357,40 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
             for k in lt.iterator(j['value']):
                 if temp_min<=k['external-temperature']<=temp_max and init_date<=k['time_datetime']<=end_date:
                     add_data(hash_table_filtered,k)
-    print(hash_table_filtered)
+                    add_data_hiper_nodes(hiper_nodes,k)
+                    if not gr.containsVertex(new_graph,k['vertex']):
+                        gr.insertVertex(new_graph,k['vertex'])
+                        lt.addLast(array_vertex,k['vertex'])
+    for w in lt.iterator(hash_table_filtered['table']):
+        if w['key']!=None:
+            for ver in range(0,len(w['value']['elements'])-1):
+                a=w['value']['elements'][ver]['vertex']
+                b=w['value']['elements'][ver+1]['vertex']
+                if a!=b:
+                    s_list_1=a.split('_')
+                    s_list_2=b.split('_')
+                    gr.addEdge(new_graph,a,b,haversine_equation(float(s_list_1[0].replace('m','-').replace('p','.')),float(s_list_1[1].replace('m','-').replace('p','.')),float(s_list_2[0].replace('m','-').replace('p','.')),float(s_list_2[1].replace('m','-').replace('p','.'))))
+
+    for r in lt.iterator(hiper_nodes['table']):
+        if r['key']!=None:
+            a=list(set(r['value']['elements']))
+            if len(a)>1:
+                for u in a:
+                    add_data_special(hiper_nodes_list,u)
+            else:
+                add_data_special(hiper_nodes_list,a[0])
+
+    for key in lt.iterator(hiper_nodes_list['table']):
+        if key['key']!=None and key['value']['size']>1:
+            hiper_np=str(str(key['key'][0])+'_'+str(key['key'][1])).replace('.','p').replace('-','m')
+            gr.insertVertex(new_graph,hiper_np)
+            for k in lt.iterator(array_vertex):
+                d_split=k.split('_')
+                if d_split[0]+'_'+d_split[1]==hiper_np:
+                    gr.addEdge(new_graph,k,hiper_np,0)
+                    gr.addEdge(new_graph,hiper_np,k,0)
+    return new_graph
+ 
         
   
 
