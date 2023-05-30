@@ -130,10 +130,10 @@ def print_req_4(control):
     """
     # TODO: Imprimir el resultado del requerimiento 4
     
-    #origen = tuple(float(coord[1:-1]) for coord in input("Ingrese la latitud y longitud del punto de origen de la forma (lon,lat): ").split(','))
-    #destino = tuple(float(coord[1:-1]) for coord in input("Ingrese la latitud y longitud del punto de destino (lon,lat): ").split(','))
+    origen = tuple(float(coord[1:-1]) for coord in input("Ingrese la latitud y longitud del punto de origen de la forma (lon,lat): ").split(','))
+    destino = tuple(float(coord[1:-1]) for coord in input("Ingrese la latitud y longitud del punto de destino (lon,lat): ").split(','))
     print('\n')
-    b=controller.req_4(control,(-111.911, 57.431),(-111.865, 57.435))  
+    b=controller.req_4(control,origen,destino)  
     print("Distancia entre el punto GPS de origen y el punto de encuentro más cercano:",b[0])
     print("Distancia entre el punto de encuentro de destino y el punto GPS de destino:",b[1])
     print("Distancia total del recorrido entre los puntos de encuentro de origen y destino:",b[2])
