@@ -133,12 +133,29 @@ def load_data(control):
                gr.addEdge(control['graph'],k,hiper_np,0)
                gr.addEdge(control['graph'],hiper_np,k,0)
                counter_hiper_nodes_edges+=2
+   list_nodes_char=lt.newList(datastructure='ARRAY_LIST')
+   
+   for f in five_first_last['elements'][:5]+five_first_last['elements'][-5:]:
+      mid_list=lt.newList(datastructure='ARRAY_LIST')
+      for t in lt.iterator(gr.adjacents(control['graph'],f)):
+         lt.addLast(mid_list,t)
+      lt.addLast(list_nodes_char,[f,'('+f.replace('m','-').replace('p','.').replace('_',',')+')',mid_list['size'],mid_list['elements']])
+
+   list_lon=lt.newList(datastructure='ARRAY_LIST')
+   list_lat=lt.newList(datastructure='ARRAY_LIST')
+   for c in lt.iterator(hiper_nodes_list['table']):
+      if c['key']!=None:
+         lt.addLast(list_lon,c['key'][0])
+         lt.addLast(list_lat,c['key'][1])
+   min_max_lon=quk.sort(list_lon,model.cmp_lon_lat)['elements']
+   min_max_lat=quk.sort(list_lat,model.cmp_lon_lat)['elements']
+
    control['list_individuals']=list_individual_wolfs
    control['hash_table_ocurrence']=hash_table_per_wolf
    control['list_hiper_nodes']=hiper_nodes_df_lt
    control['hash_vertex']=hash_vertex
   
-   return control, counter_hiper_nodes,counter_hiper_nodes_edges
+   return control,46,counter_wolfs,counter_hiper_nodes,counter_follow_nodes,counter_hiper_nodes_edges,counter_nodes_edges,[[min_max_lat[0],min_max_lat[-1]],[min_max_lon[0],[-1]]],list_nodes_char
    
 
 # Funciones de ordenamiento
