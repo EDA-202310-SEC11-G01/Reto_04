@@ -218,7 +218,7 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
            
     hiper_nodes_route=list(set(hiper_nodes_route['elements']))
     number_nodes_individuals=len(set(number_nodes_individuals['elements']))
-    total_segments=(list_vertices_path['size']*2)-1
+    total_segments=(list_vertices_path['size'])-1
     
     list_3_first_last=lt.newList(datastructure='ARRAY_LIST')
 
@@ -342,8 +342,8 @@ def req_6(data_structs,init_date,end_date,animal_sex):
     hiper_nodes_route_shortest=list(set(hiper_nodes_route_shortest['elements']))#Lenght total hiper_nodos
     hiper_nodes_route_larger=list(set(hiper_nodes_route_larger['elements']))#Lenght total hiper_nodos
 
-    path_larger_size=(path_larger['size']*2)-1
-    path_shortest_size=(path_shortest['size']*2)-1
+    path_larger_size=(path_larger['size'])-1
+    path_shortest_size=(path_shortest['size'])-1
 
     list_3_first_last_shortest=lt.newList(datastructure='ARRAY_LIST')
     list_3_first_last_larger=lt.newList(datastructure='ARRAY_LIST')
@@ -354,7 +354,7 @@ def req_6(data_structs,init_date,end_date,animal_sex):
     list_individual_short_char['elements'][0]['total_distance']=path_total_shortest
     list_individual_large_char['elements'][0]['total_distance']=path_total_larger
     
-    return list_individual_short_char['elements'][0],shortest_path[1],len(hiper_nodes_route_shortest),path_shortest_size,list_3_first_last_shortest,list_individual_large_char['elements'][0],larger_path[1],len(hiper_nodes_route_shortest),path_larger_size,list_3_first_last_larger
+    return list_individual_short_char['elements'][0],shortest_path[1],len(hiper_nodes_route_shortest),path_shortest_size,list_3_first_last_shortest,list_individual_large_char['elements'][0],larger_path[1],len(hiper_nodes_route_larger),path_larger_size,list_3_first_last_larger
     
     
 def req_7(data_structs,init_date,end_date,temp_min,temp_max):
@@ -497,7 +497,7 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
             first_last_3_hiper_nodes=set([fr['value']['elements'][0]]+list_hiper_nodes['elements'][:3]+list_hiper_nodes['elements'][-3:]+[fr['value']['elements'][-1]])
             first_last_3_individuals=set(list_individuals['elements'][:3]+list_individuals['elements'][-3:])
             
-            lt.addLast(part_2,[largest_path_territorie[1],list_hiper_nodes['size'],(path_largest['size']*2)+1,first_last_3_hiper_nodes,set(list_individuals['elements']),first_last_3_individuals])
+            lt.addLast(part_2,[largest_path_territorie[1],list_hiper_nodes['size'],(path_largest['size'])-1,first_last_3_hiper_nodes,set(list_individuals['elements']),first_last_3_individuals])
             return rows,part_2
     
 

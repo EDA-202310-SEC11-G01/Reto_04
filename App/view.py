@@ -159,7 +159,47 @@ def print_req_6(control):
         Función que imprime la solución del Requerimiento 6 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 6
-    print(controller.req_6(control,'2013-02-16 00:00','2014-10-23 23:59','hembras'))
+    fecha_inicial = input("Ingrese la fecha inicial del análisis (formato: YYYY-MM-DD): ")
+    fecha_final = input("Ingrese la fecha final del análisis (formato: YYYY-MM-DD): ")
+    sexo_animal = input("Ingrese el sexo registrado del animal (formato: hembras-machos): ")
+
+    t=controller.req_6(control,'2013-02-16 00:00','2014-10-23 23:59','hembras')
+
+    print('Primera parte')
+    
+    headers_1_1=['individual-id','animal-taxon','animal-life-stage','animal-sex','study-name','total_distance','deployment-comments']
+    headers_1_2=["ID","Longitud","Latitud","Individuos","Tres primeros y tres últimos identificadores"]
+
+    tabulate_data([t[0]],headers_1_1)
+    
+    print('La ruta más larga del individuo registrada:')
+    print('Información:')
+    print('\n')
+    print("La distancia total posible en el recorrido es:", t[1])
+    print("El total de puntos de encuentro/seguimientos pertenecientes al camino identificado (nodos) es:", t[2])
+    print("El total de trayectos que conforman la ruta identificada (arcos) es:", t[3])
+
+    if len(t[4])!=0:
+        print(tabulate(t[4],headers_1_2,tablefmt='grid',stralign='center',maxheadercolwidths=13,maxcolwidths=13))
+    else:
+        print('')
+
+    print('\n')
+    print('Segunda Parte')
+    tabulate_data([t[5]],headers_1_1)
+
+    print('La ruta más larga del individuo registrada:')
+    print('Información:')
+    print('\n')
+    print("La distancia total posible en el recorrido es:", t[6])
+    print("El total de puntos de encuentro/seguimientos pertenecientes al camino identificado (nodos) es:", t[7])
+    print("El total de trayectos que conforman la ruta identificada (arcos) es:", t[8])
+
+    if len(t[9])!=0:
+        print(tabulate(t[9],headers_1_2,tablefmt='grid',stralign='center',maxheadercolwidths=13,maxcolwidths=13))
+    else:
+        print('')
+
 
 
 def print_req_7(control):
