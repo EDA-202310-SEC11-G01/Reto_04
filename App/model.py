@@ -418,7 +418,7 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
     for i in lt.iterator(components['table']):
         if i['key']!=None:
             lt.addLast(list_components,i)
-    return quk.sort(list_components,cmp_hash_table_1)['elements'][0]
+    return quk.sort(list_components,cmp_hash_table)['elements'][0]
         
     # return quk.sort(components['table'],cmp_hash_table)['elements'][-1]
     
@@ -475,7 +475,7 @@ def first_3_last_3(data_structs,lista):
 #     else:
 #         return False
     
-def cmp_hash_table_1(data_1,data_2):
+def cmp_hash_table(data_1,data_2):
     return data_1['value']['size']>=data_2['value']['size']
 
     
