@@ -336,7 +336,26 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
     Función que soluciona el requerimiento 7
     """
     # TODO: Realizar el requerimiento 7
+    #scc.sccCount(data_structs['graph']).keys()
+    #print(scc.KosarajuSCC(data_structs['graph']).keys())
+    init_date=datetime.strptime(init_date,'%Y-%m-%d %H:%M')
+    end_date=datetime.strptime(end_date,'%Y-%m-%d %H:%M')
+    list_individual_id_selected=lt.newList(datastructure='ARRAY_LIST')
+    hash_table_filtered=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
+
+    for i in lt.iterator(data_structs['list_individuals']):
+        if len(i['deploy-on-date'])>1 and datetime.strptime(i['deploy-on-date'],'%Y-%m-%d %H:%M')>=init_date:
+            if len(i['deploy-off-date'])==0 or datetime.strptime(i['deploy-off-date'],'%Y-%m-%d %H:%M')<=end_date:
+                lt.addLast(list_individual_id_selected,i['individual-id'])
     
+    for j in lt.iterator(data_structs['hash_table_ocurrence']['table']):
+        if j['key']!=None and j['key'] in list_individual_id_selected['elements']:
+            for k in lt.iterator(j['value']):
+                if temp_min<=k['external-temperature']<=temp_max and init_date<=k['time_datetime']<=end_date:
+                    add_data(hash_table_filtered,k)
+    print(hash_table_filtered)
+        
+  
 
 
 def req_8(data_structs):
