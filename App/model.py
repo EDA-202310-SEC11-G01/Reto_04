@@ -430,19 +430,10 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
         hiper_nodes_sub_list=lt.newList(datastructure='ARRAY_LIST')#SIZE_HIPERNODOS
         herd_members=lt.newList(datastructure='ARRAY_LIST')#size_miembros manada
 
-        for q in lt.iterator(x['value']):
-            qua=q.split('_')
-
-            if len(qua)==2:
-                lt.addLast(hiper_nodes_sub_list,q)
-            if len(qua)>2:
-                if len(qua)==6:
-                    lt.addLast(herd_members,qua[2]+'_'+qua[3]+'_'+qua[4]+'_'+qua[5])
-                elif len(qua)==5:
-                    lt.addLast(herd_members,qua[2]+'_'+qua[3]+'_'+qua[4])
-                else:
-                    lt.addLast(herd_members,qua[2]+'_'+qua[3])
-        
+        tua=nua(x['value'])
+        hiper_nodes_sub_list=tua[0]
+        herd_members=tua[1]
+                
         hiper_nodes_sub_list_3_first_last=set(hiper_nodes_sub_list['elements'][:3]+hiper_nodes_sub_list['elements'][-3:])#lista_nodos_3_first_last
 
         herd_members_3_first_last=set(herd_members['elements'][:3]+herd_members['elements'][-3:])#lista_members_3_first_last
@@ -494,22 +485,12 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
             
             semi_djk_graph=djk.Dijkstra(new_graph,fr['value']['elements'][0])
             path_largest=djk.pathTo(semi_djk_graph,fr['value']['elements'][-1])
-            list_hiper_nodes=lt.newList(datastructure='ARRAY_LIST')#Contador hiper_nodos
-            list_individuals=lt.newList(datastructure='ARRAY_LIST')#contador individuos
 
             # numero de puentes
-            for q in lt.iterator(x['value']):
-                qua=q.split('_')
+            fua=nua(fr['value'])
+            list_hiper_nodes=fua[0]#Contador hiper_nodos
+            list_individuals=fua[1]#contador individuos
 
-                if len(qua)==2:
-                    lt.addLast(list_hiper_nodes,q)
-                if len(qua)>2:
-                    if len(qua)==6:
-                        lt.addLast(list_individuals,qua[2]+'_'+qua[3]+'_'+qua[4]+'_'+qua[5])
-                    elif len(qua)==5:
-                        lt.addLast(list_individuals,qua[2]+'_'+qua[3]+'_'+qua[4])
-                    else:
-                        lt.addLast(list_individuals,qua[2]+'_'+qua[3])
 
             first_last_3_hiper_nodes=set([fr['value']['elements'][0]]+list_hiper_nodes['elements'][:3]+list_hiper_nodes['elements'][-3:]+[fr['value']['elements'][-1]])
             first_last_3_individuals=set(list_individuals['elements'][:3]+list_individuals['elements'][-3:])
@@ -519,8 +500,23 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
     return rows,part_2
 
  #Cambiar lo de qua y modificar lo de los indentificadores en el 4
-        
-  
+
+def nua(lista):
+    hiper_nodes_sub_list=lt.newList(datastructure='ARRAY_LIST')
+    herd_members=lt.newList(datastructure='ARRAY_LIST')
+    for q in lt.iterator(lista):
+        qua=q.split('_')
+
+        if len(qua)==2:
+            lt.addLast(hiper_nodes_sub_list,q)
+        if len(qua)>2:
+            if len(qua)==6:
+                lt.addLast(herd_members,qua[2]+'_'+qua[3]+'_'+qua[4]+'_'+qua[5])
+            elif len(qua)==5:
+                lt.addLast(herd_members,qua[2]+'_'+qua[3]+'_'+qua[4])
+            else:
+                lt.addLast(herd_members,qua[2]+'_'+qua[3])    
+    return hiper_nodes_sub_list,herd_members
 
 
 def req_8(data_structs):
