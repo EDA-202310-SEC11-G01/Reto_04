@@ -155,7 +155,7 @@ def load_data(control):
    control['list_hiper_nodes']=hiper_nodes_df_lt
    control['hash_vertex']=hash_vertex
   
-   return control,46,counter_wolfs,counter_hiper_nodes,counter_follow_nodes,counter_hiper_nodes_edges,counter_nodes_edges,[[min_max_lat[0],min_max_lat[-1]],[min_max_lon[0],[-1]]],list_nodes_char
+   return control,46,counter_wolfs,counter_hiper_nodes,counter_follow_nodes,counter_hiper_nodes_edges,counter_nodes_edges,[[min_max_lat[0],min_max_lat[-1]],[min_max_lon[0],min_max_lon[-1]]],list_nodes_char
    
 
 # Funciones de ordenamiento

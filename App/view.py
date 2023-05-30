@@ -48,6 +48,13 @@ def new_controller():
     #TODO: Llamar la función del controlador donde se crean las estructuras de datos
     return controller.new_controller()
 
+def tabulate_data(data_set,header):
+    data_set_org=[]
+    for i in data_set:
+        i=dict([(key,val) for key,val in i.items() if key in header])
+        data_set_org.append(i)
+    rows=[x.values() for x in data_set_org]
+    print(tabulate(rows,list(data_set_org[0].keys()),tablefmt='grid',stralign='center',maxheadercolwidths=13,maxcolwidths=13))
 
 def print_menu():
     print("Bienvenido")
@@ -72,7 +79,23 @@ def load_data(control):
     Todo esta ya hecho falta el print del view osea las palabras y eso pero la info esta alli, osea todo esta hecho solo falta mostrarlo. Esto del view 
     usualemnte lo hacemos al final del reto siempre , porque es la parte menos importante, entonces eimpre lo dejamos hasta el final, todo lo del view.
     '''
-    print(controller.load_data(control)[-1])
+    a=controller.load_data(control)
+    print("Total de lobos reconocidos en el estudio:", a[1])
+    print("Total de eventos cargados durante el estudio:", a[2])
+    print("Total de puntos de encuentro reconocidos:", a[3])
+    print("Total de puntos de seguimiento reconocidos:", a[4])
+    print("Total de arcos creados para unir los nodos de encuentro y los puntos de seguimiento:", a[5])
+    print("Total de arcos creados para representar el movimiento de los individuos:", a[6])
+    print("Rango del área rectangular que ocupan los lobos grises de Boutin Alberta en Canadá:")
+    print("Latitud mínima & máxima:", str(a[7][0][0])+' and '+str(a[7][0][1]))
+    print("Longitud mínima & máxima:", str(a[7][1][0])+' and '+str(a[7][1][1]))
+    print('\n')
+    print('\n')
+    headers=["Identificador del punto de encuentro","Geolocalización","Total de lobos","Lista de identificadores"]
+    print(tabulate(a[8]['elements'],headers,tablefmt='grid',stralign='center',maxheadercolwidths=15,maxcolwidths=15))
+
+    
+    
     #print(control['graph'])
     
 def print_data(control, id):
