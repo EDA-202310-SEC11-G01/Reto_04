@@ -477,11 +477,46 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
         lt.addLast(row,me_ma_lon[0])
         lt.addLast(row,me_ma_lon[-1])
         lt.addLast(rows,row['elements'])
-    return rows
-    # return quk.sort(components['table'],cmp_hash_table)['elements'][-1]
-    
-    # for i in lt.iterator(scc.sccCount(new_graph,scc_graph,'m111p154_56p691_33677_33677')['idscc']['table']):
-    #     print(i)
+
+    largest_territorie=lt.newList(datastructure='ARRAY_LIST')
+    for cd in lt.iterator(list_territories):
+        semi_djk_graph=djk.Dijkstra(new_graph,cd['value']['elements'][0])
+        lt.addLast(largest_territorie,(cd['key'],djk.distTo(semi_djk_graph,cd['value']['elements'][-1])))
+
+    largest_path_territorie=quk.sort(largest_territorie,cmp_harvesine)['elements'][-1]
+    part_2=lt.newList(datastructure='ARRAY_LIST')
+
+    for fr in lt.iterator(list_territories):
+        
+        #distancia larga recorrida
+        if largest_path_territorie[0]==fr['key']:
+
+            
+            semi_djk_graph=djk.Dijkstra(new_graph,fr['value']['elements'][0])
+            path_largest=djk.pathTo(semi_djk_graph,fr['value']['elements'][-1])
+            list_hiper_nodes=lt.newList(datastructure='ARRAY_LIST')#Contador hiper_nodos
+            list_individuals=lt.newList(datastructure='ARRAY_LIST')#contador individuos
+
+            # numero de puentes
+            for q in lt.iterator(x['value']):
+                qua=q.split('_')
+
+                if len(qua)==2:
+                    lt.addLast(list_hiper_nodes,q)
+                if len(qua)>2:
+                    if len(qua)==6:
+                        lt.addLast(list_individuals,qua[2]+'_'+qua[3]+'_'+qua[4]+'_'+qua[5])
+                    elif len(qua)==5:
+                        lt.addLast(list_individuals,qua[2]+'_'+qua[3]+'_'+qua[4])
+                    else:
+                        lt.addLast(list_individuals,qua[2]+'_'+qua[3])
+
+            first_last_3_hiper_nodes=set([fr['value']['elements'][0]]+list_hiper_nodes['elements'][:3]+list_hiper_nodes['elements'][-3:]+[fr['value']['elements'][-1]])
+            first_last_3_individuals=set(list_individuals['elements'][:3]+list_individuals['elements'][-3:])
+            
+            lt.addLast(part_2,[largest_path_territorie[1],list_hiper_nodes['size'],(path_largest['size']*2)+1,first_last_3_hiper_nodes,set(list_individuals['elements']),first_last_3_individuals])
+            break
+    return row,part_2
 
  
         
@@ -527,12 +562,7 @@ def first_3_last_3(data_structs,lista):
         lt.addLast(row,adjacents_array['elements'])
         lt.addLast(list_,row['elements'])
     return list_['elements']
-# def cmp_hash_table(data_1,data_2):
-#     if data_1['key']!=None and data_2['key']!=None:
-#         return data_1['value']['size']>=data_2['value']['size']
-#     else:
-#         return False
-    
+
 def cmp_hash_table(data_1,data_2):
     return data_1['value']['size']>=data_2['value']['size']
 
