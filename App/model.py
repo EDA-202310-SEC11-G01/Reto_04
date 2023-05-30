@@ -113,6 +113,21 @@ def add_data_special(hash_table_per_wolf,data):
         mp.put(hash_table_per_wolf,data,value)
     return hash_table_per_wolf
 
+def add_data_new_graph(hash_table_per_wolf,data):
+    """
+    Función para agregar nuevos elementos a la lista
+    """
+    #TODO: Crear la función para agregar elementos a una lista
+
+    if mp.contains(hash_table_per_wolf,str(data['value'])):
+        lt.addLast(mp.get(hash_table_per_wolf,str(data['value']))['value'],data['key'])
+    else:
+        value=lt.newList(datastructure='ARRAY_LIST')
+        lt.addLast(value,data['key'])
+        mp.put(hash_table_per_wolf,str(data['value']),value)
+    return hash_table_per_wolf
+
+
 # Funciones para creacion de datos
 
 def new_data(id, info):
@@ -346,11 +361,15 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
     hiper_nodes=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
     hiper_nodes_list=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
     array_vertex=lt.newList(datastructure='ARRAY_LIST')
+    components=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
 
     for i in lt.iterator(data_structs['list_individuals']):
-        if len(i['deploy-on-date'])>1 and datetime.strptime(i['deploy-on-date'],'%Y-%m-%d %H:%M')>=init_date:
-            if len(i['deploy-off-date'])==0 or datetime.strptime(i['deploy-off-date'],'%Y-%m-%d %H:%M')<=end_date:
-                lt.addLast(list_individual_id_selected,i['individual-id'])
+        if len(i['deploy-on-date'])!=0:
+            if datetime.strptime(i['deploy-on-date'],'%Y-%m-%d %H:%M')>=init_date:
+                if len(i['deploy-off-date'])==0 or datetime.strptime(i['deploy-off-date'],'%Y-%m-%d %H:%M')<=end_date:
+                    lt.addLast(list_individual_id_selected,i['individual-id'])
+        else:
+            lt.addLast(list_individual_id_selected,i['individual-id'])
     
     for j in lt.iterator(data_structs['hash_table_ocurrence']['table']):
         if j['key']!=None and j['key'] in list_individual_id_selected['elements']:
@@ -389,7 +408,20 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
                 if d_split[0]+'_'+d_split[1]==hiper_np:
                     gr.addEdge(new_graph,k,hiper_np,0)
                     gr.addEdge(new_graph,hiper_np,k,0)
-    return new_graph
+    
+    scc_graph=scc.KosarajuSCC(new_graph)
+    for h in lt.iterator(scc_graph['idscc']['table']):
+        if h['key']!=None:
+            add_data_new_graph(components,h)
+            
+    for i in lt.iterator(components['table']):
+        if i['key']!=None and i['value']['size']>1:
+            print(i)
+    # return quk.sort(components['table'],cmp_hash_table)['elements'][-1]
+    
+    # for i in lt.iterator(scc.sccCount(new_graph,scc_graph,'m111p154_56p691_33677_33677')['idscc']['table']):
+    #     print(i)
+
  
         
   
@@ -434,6 +466,11 @@ def first_3_last_3(data_structs,lista):
         lt.addLast(row,adjacents_array['elements'])
         lt.addLast(list_,row['elements'])
     return list_['elements']
+def cmp_hash_table(data_1,data_2):
+    if data_1['key']!=None and data_2['key']!=None:
+        return data_1['value']['size']>=data_2['value']['size']
+    else:
+        return False
 def cmp_harvesine(data_1,data_2):
     return data_1[1]<=data_2[1]
 
