@@ -163,7 +163,7 @@ def print_req_6(control):
     fecha_final = input("Ingrese la fecha final del análisis (formato: YYYY-MM-DD): ")
     sexo_animal = input("Ingrese el sexo registrado del animal (formato: hembras-machos): ")
 
-    t=controller.req_6(control,'2013-02-16 00:00','2014-10-23 23:59','hembras')
+    t=controller.req_6(control,fecha_inicial,fecha_final,sexo_animal)
 
     print('Primera parte')
     
