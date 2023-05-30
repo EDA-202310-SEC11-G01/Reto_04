@@ -192,18 +192,30 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
     hiper_nodes_route=lt.newList(datastructure='ARRAY_LIST')
     number_nodes_individuals=lt.newList(datastructure='ARRAY_LIST')
     for k in lt.iterator(list_vertices_path):
-        if k['weight']==0 and len(k['vertexA'].split('_'))==2:
+        vertex_A=k['vertexA'].split('_')
+        vertex_B=k['vertexB'].split('_')
+
+        if k['weight']==0 and len(vertex_A)==2:
                 lt.addLast(hiper_nodes_route,k['vertexA'])
         else:
-            vertex_A=k['vertexA'].split('_')
-            lt.addLast(number_nodes_individuals,vertex_A[2]+'_'+vertex_A[3])
+            if len(vertex_A)==6:
+                lt.addLast(number_nodes_individuals,vertex_A[2]+'_'+vertex_A[3]+'_'+vertex_A[4]+'_'+vertex_A[5])
+            elif len(vertex_A)==5:
+                lt.addLast(number_nodes_individuals,vertex_A[2]+'_'+vertex_A[3]+'_'+vertex_A[4])
+            else:
+                lt.addLast(number_nodes_individuals,vertex_A[2]+'_'+vertex_A[3])    
 
-        if k['weight']==0 and len(k['vertexB'].split('_'))==2:
+        if k['weight']==0 and len(vertex_B)==2:
                 lt.addLast(hiper_nodes_route,k['vertexB'])      
         else:
-            vertex_B=k['vertexB'].split('_')
-            lt.addLast(number_nodes_individuals,vertex_B[2]+'_'+vertex_B[3])
+            if len(vertex_B)==6:
+                lt.addLast(number_nodes_individuals,vertex_B[2]+'_'+vertex_B[3]+'_'+vertex_B[4]+'_'+vertex_B[5])
+            elif len(vertex_B)==5:
+                lt.addLast(number_nodes_individuals,vertex_B[2]+'_'+vertex_B[3]+'_'+vertex_B[4])
+            else:
+                lt.addLast(number_nodes_individuals,vertex_B[2]+'_'+vertex_B[3])    
 
+           
     hiper_nodes_route=list(set(hiper_nodes_route['elements']))
     number_nodes_individuals=len(set(number_nodes_individuals['elements']))
     total_segments=(list_vertices_path['size']*2)-1
@@ -220,13 +232,8 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
 
         for j in lt.iterator(list_adjacents_size):
             lt.addLast(adjacents_array,j)
-
-        lt.addLast(row,i)
-        lt.addLast(row,lon)
-        lt.addLast(row,lati)
-        lt.addLast(row,list_adjacents_size['size'])
-        lt.addLast(row,adjacents_array['elements'])
-
+        lt.addLast(row,[i,lon,lati,list_adjacents_size['size'],adjacents_array['elements']])
+        
         list_hiper_node_nearest=lt.newList(datastructure='ARRAY_LIST')
         for o in lt.iterator(data_structs['list_hiper_nodes']):
             lt.addLast(list_hiper_node_nearest,(o,haversine_equation(o[0],o[1],lon,lati)))
@@ -541,7 +548,7 @@ def first_3_last_3(data_structs,lista):
 
         for j in lt.iterator(list_adjacents_size):
             lt.addLast(adjacents_array,j)
-
+        
         lt.addLast(row,p)
         lt.addLast(row,lon)
         lt.addLast(row,lati)
