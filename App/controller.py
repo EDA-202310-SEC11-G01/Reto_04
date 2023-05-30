@@ -69,7 +69,6 @@ def load_data(control):
    hash_table_per_wolf=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING') 
    hiper_nodes=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
    hiper_nodes_list=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
-   #array_vertex=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
    array_vertex=lt.newList(datastructure='ARRAY_LIST')
    five_first_last=lt.newList(datastructure='ARRAY_LIST')
    hash_vertex=mp.newMap(numelements=45,loadfactor=0.75,maptype='PROBING')
