@@ -224,17 +224,17 @@ def print_req_7(control):
 
     x=controller.req_7(control,'2012-11-28 00:00','2014-05-17 23:59','-17.3','9.7')
     print('El total de manadas reconocidas por sus movimientos y puntos de encuentro (componentes conectados) en el rango de fechas y temperatura ambiente dados.',x[0])
-    headers = [
-    "Num Puntos Encuentro",
-    "Los tres primeros y tres últimos puntos de encuentro reconocidos dentro del territorio",
-    "Num Individuos por manada",
-    "Los tres primeros y tres últimos miembros de la manada",
-    "Longitud min","Longitud max","Latitudes min","Latitudes max"]
+    headers = ["Num Puntos Encuentro","Los tres primeros y tres últimos puntos de encuentro reconocidos dentro del territorio","Num Individuos por manada","Los tres primeros y tres últimos miembros de la manada","Longitud min","Longitud max","Latitudes min","Latitudes max"]
 
     for i in x[1]:
         i[3]=tabulate_data_req7(i[3],headers_1_1)
     
     print(tabulate(x[1],headers,tablefmt='grid',stralign='center',maxheadercolwidths=13))
+
+    headers_3=["Distancia Total","Total Nodos","Total Arcos","Puntos de Encuentro","Total Individuos","Individuos Distintos"]
+    
+    print(tabulate(x[2],headers_3,tablefmt='grid',stralign='center',maxheadercolwidths=13,maxcolwidths=13))
+
     
        
 
