@@ -129,7 +129,14 @@ def print_req_4(control):
         Función que imprime la solución del Requerimiento 4 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 4
-    print(controller.req_4(control,(-111.911, 57.431),(-111.865, 57.435)))
+    # Solicitar localización geográfica del punto de origen
+    origen = tuple(float(coord[1:-1]) for coord in input("Ingrese la latitud y longitud del punto de origen de la forma (lon,lat): ").split(','))
+
+    # Solicitar localización geográfica del punto de destino
+
+    destino = tuple(float(coord[1:-1]) for coord in input("Ingrese la latitud y longitud del punto de destino (lon,lat): ").split(','))
+
+    print(controller.req_4(control,origen,destino))
 
 
 def print_req_5(control):
