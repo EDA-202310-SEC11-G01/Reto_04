@@ -222,7 +222,7 @@ def print_req_7(control):
 
     headers_1_1=['individual-id','animal-taxon','animal-life-stage','animal-sex','study-name','total_distance','deployment-comments']
 
-    x=controller.req_7(control,'2012-11-28 00:00','2014-05-17 23:59','-17.3','9.7')
+    x=controller.req_7(control,fecha_inicial,fecha_final,temperatura_minima,temperatura_maxima)
     print('El total de manadas reconocidas por sus movimientos y puntos de encuentro (componentes conectados) en el rango de fechas y temperatura ambiente dados.',x[0])
     headers = ["Num Puntos Encuentro","Los tres primeros y tres últimos puntos de encuentro reconocidos dentro del territorio","Num Individuos por manada","Los tres primeros y tres últimos miembros de la manada","Longitud min","Longitud max","Latitudes min","Latitudes max"]
 
