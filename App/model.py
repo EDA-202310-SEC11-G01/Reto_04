@@ -232,17 +232,21 @@ def req_4(data_structs,lon_lat_1,lon_lat_2):
 
         for j in lt.iterator(list_adjacents_size):
             lt.addLast(adjacents_array,j)
-        lt.addLast(row,[i,lon,lati,list_adjacents_size['size'],adjacents_array['elements']])
+        lt.addLast(row,i)
+        lt.addLast(row,lon)
+        lt.addLast(row,lati)
+        lt.addLast(row,list_adjacents_size['size'])
+        lt.addLast(row,adjacents_array['elements'])
         
         list_hiper_node_nearest=lt.newList(datastructure='ARRAY_LIST')
         for o in lt.iterator(data_structs['list_hiper_nodes']):
             lt.addLast(list_hiper_node_nearest,(o,haversine_equation(o[0],o[1],lon,lati)))
 
         list_hiper_node_nearest=quk.sort(list_hiper_node_nearest,cmp_harvesine)['elements'][1]
-        lt.addLast(row,str(str(list_hiper_node_nearest[0][0])+'_'+str(list_hiper_node_nearest[0][1])).replace('.','p').replace('-','m'))
-        lt.addLast(list_3_first_last,row)
+        lt.addLast(row,list_hiper_node_nearest[1])
+        lt.addLast(list_3_first_last,row['elements'])
     
-    return lon_lat_1_nearest[1], lon_lat_2_nearest[1], total_weight, len(hiper_nodes_route), number_nodes_individuals,total_segments,list_3_first_last
+    return lon_lat_1_nearest[1], lon_lat_2_nearest[1], total_weight, len(hiper_nodes_route), number_nodes_individuals,total_segments,list_3_first_last['elements']
             
 def req_5(data_structs):
     """
