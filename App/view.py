@@ -93,10 +93,6 @@ def load_data(control):
     print('\n')
     headers=["Identificador del punto de encuentro","Geolocalización","Total de lobos","Lista de identificadores"]
     print(tabulate(a[8]['elements'],headers,tablefmt='grid',stralign='center',maxheadercolwidths=15,maxcolwidths=15))
-
-    
-    
-    #print(control['graph'])
     
 def print_data(control, id):
     """
