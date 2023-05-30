@@ -424,16 +424,14 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
 
     rows=lt.newList(datastructure='ARRAY_LIST')
 
-    for x in list_territories_first_last:
-        row=lt.newList(datastructure='ARRAY_LIST')
-        
+    for x in list_territories_first_last:        
         hiper_nodes_sub_list=lt.newList(datastructure='ARRAY_LIST')#SIZE_HIPERNODOS
         herd_members=lt.newList(datastructure='ARRAY_LIST')#size_miembros manada
 
         tua=nua(x['value'])
         hiper_nodes_sub_list=tua[0]
         herd_members=tua[1]
-                
+
         hiper_nodes_sub_list_3_first_last=set(hiper_nodes_sub_list['elements'][:3]+hiper_nodes_sub_list['elements'][-3:])#lista_nodos_3_first_last
 
         herd_members_3_first_last=set(herd_members['elements'][:3]+herd_members['elements'][-3:])#lista_members_3_first_last
@@ -458,16 +456,9 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
 
         me_ma_lat=quk.sort(list_lon,cmp_lon_lat)['elements']#menor:0 mayor:-1  LON
         me_ma_lon=quk.sort(list_lat,cmp_lon_lat)['elements']#menor:0 mayor:-1 LAT
-        
-        lt.addLast(row,hiper_nodes_sub_list['size'])
-        lt.addLast(row,hiper_nodes_sub_list_3_first_last)
-        lt.addLast(row,herd_members['size'])
-        lt.addLast(row,list_wolf_details)
-        lt.addLast(row,me_ma_lat[0])
-        lt.addLast(row,me_ma_lat[-1])
-        lt.addLast(row,me_ma_lon[0])
-        lt.addLast(row,me_ma_lon[-1])
-        lt.addLast(rows,row['elements'])
+        lt.addLast(rows,[hiper_nodes_sub_list['size'],hiper_nodes_sub_list_3_first_last,herd_members['size'],list_wolf_details,me_ma_lat[0],me_ma_lat[-1],me_ma_lon[0],me_ma_lon[-1]])
+
+        # lt.addLast(rows,row['elements'])
 
     largest_territorie=lt.newList(datastructure='ARRAY_LIST')
     for cd in lt.iterator(list_territories):
@@ -496,8 +487,8 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
             first_last_3_individuals=set(list_individuals['elements'][:3]+list_individuals['elements'][-3:])
             
             lt.addLast(part_2,[largest_path_territorie[1],list_hiper_nodes['size'],(path_largest['size']*2)+1,first_last_3_hiper_nodes,set(list_individuals['elements']),first_last_3_individuals])
-            break
-    return rows,part_2
+            return rows,part_2
+    
 
  #Cambiar lo de qua y modificar lo de los indentificadores en el 4
 
