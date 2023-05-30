@@ -385,7 +385,7 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
     for j in lt.iterator(data_structs['hash_table_ocurrence']['table']):
         if j['key']!=None and j['key'] in list_individual_id_selected['elements']:
             for k in lt.iterator(j['value']):
-                if temp_min<=k['external-temperature']<=temp_max and init_date<=k['time_datetime']<=end_date:
+                if temp_min<=float(k['external-temperature'])<=temp_max and init_date<=k['time_datetime']<=end_date:
                     add_data(hash_table_filtered,k)
                     add_data_hiper_nodes(hiper_nodes,k)
                     if not gr.containsVertex(new_graph,k['vertex']):
