@@ -468,8 +468,6 @@ def req_7(data_structs,init_date,end_date,temp_min,temp_max):
         me_ma_lat=quk.sort(list_lon,cmp_lon_lat)['elements']#menor:0 mayor:-1  LON
         me_ma_lon=quk.sort(list_lat,cmp_lon_lat)['elements']#menor:0 mayor:-1 LAT
         
-        
-
         lt.addLast(row,hiper_nodes_sub_list['size'])
         lt.addLast(row,hiper_nodes_sub_list_3_first_last)
         lt.addLast(row,herd_members['size'])
