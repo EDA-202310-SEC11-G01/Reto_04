@@ -73,7 +73,7 @@ def load_data(control):
     usualemnte lo hacemos al final del reto siempre , porque es la parte menos importante, entonces eimpre lo dejamos hasta el final, todo lo del view.
     '''
     controller.load_data(control)
-    print(control)
+    print(control['graph'])
     
 def print_data(control, id):
     """
