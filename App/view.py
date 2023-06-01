@@ -151,7 +151,7 @@ def print_req_4(control):
     print('\n')
 
     headers=["Identificador punto de encuentro","Longitud","Latitud", "# lobos que transitan por ese punto", "FISRT_LAST_THREE" ,"Distancia al siguiente punto de encuentro"]
-    print(tabulate(b[6],headers,tablefmt='grid',stralign='center',maxheadercolwidths=15,maxcolwidths=15))
+    print(b[6])
 
 
 def print_req_5(control):
